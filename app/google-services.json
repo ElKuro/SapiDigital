@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "320347315373",
+    "project_id": "sapidigital-e4gle",
+    "storage_bucket": "sapidigital-e4gle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320347315373:android:ab810462c989744f973a24",
+        "android_client_info": {
+          "package_name": "com.example.sapidigital"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320347315373-1v5mclqotrhcgurcd86k0ivdnhbrsili.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiNnJUjy77LVWfy94PWj2vVtt2qK-w2r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320347315373-1v5mclqotrhcgurcd86k0ivdnhbrsili.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
