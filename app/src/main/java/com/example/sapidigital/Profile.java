@@ -5,9 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,23 +27,32 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import org.w3c.dom.Text;
 
-public class Profile extends AppCompatActivity {
+import de.hdodenhof.circleimageview.CircleImageView;
 
+public class Profile extends AppCompatActivity {
+    private static final int GALLERY_INTENT_CODE = 1023;
+
+
+    CircleImageView profileImageView;
     TextView fullname,email,phone,msgverify,address;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
-    Button mHome,resendCode,resetPass;
+    Button mHome,resendCode,resetPass,mchangeprofile;
     FirebaseUser user;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Intent data = getIntent();
 
         mHome = findViewById(R.id.Home);
         fullname = findViewById(R.id.profilename);
@@ -52,6 +64,8 @@ public class Profile extends AppCompatActivity {
         userId = fAuth.getCurrentUser().getUid();
         msgverify = findViewById(R.id.verify);
         resetPass = findViewById(R.id.ResetpasswordBtn);
+        profileImageView = findViewById(R.id.profileimage );
+        mchangeprofile = findViewById(R.id.changeprofile);
 
          user = fAuth.getCurrentUser();
 
@@ -91,6 +105,15 @@ public class Profile extends AppCompatActivity {
                 });
 
                 passwordResetDialog.create().show();
+            }
+        });
+
+        mchangeprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open gallery
+                Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media. EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGalleryIntent,1000);
             }
         });
 
@@ -136,5 +159,18 @@ public class Profile extends AppCompatActivity {
                 fullname.setText(documentSnapshot.getString("fName"));
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000) {
+            if(resultCode == Activity.RESULT_OK){
+                Uri imageUri = data.getData();
+                profileImageView.setImageURI(imageUri);
+
+
+            }
+        }
     }
 }
