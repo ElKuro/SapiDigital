@@ -27,11 +27,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.internal.$Gson$Preconditions;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.grpc.Context;
 
 public class Profile extends AppCompatActivity {
     private static final int GALLERY_INTENT_CODE = 1023;
@@ -44,6 +49,7 @@ public class Profile extends AppCompatActivity {
     String userId;
     Button mHome,resendCode,resetPass,mchangeprofile;
     FirebaseUser user;
+    StorageReference storageReference;
 
 
 
@@ -54,18 +60,37 @@ public class Profile extends AppCompatActivity {
 
         Intent data = getIntent();
 
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference(); //To Upload Image
+
+        profileImageView = findViewById(R.id.profileimage );
+
+
+        StorageReference profileRef = storageReference.child("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileImageView);
+            }
+        });
+
+
+
         mHome = findViewById(R.id.Home);
         fullname = findViewById(R.id.profilename);
         email = findViewById(R.id.profileemail);
         phone = findViewById(R.id.profilephone);
         address = findViewById(R.id.profileaddress);
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
         msgverify = findViewById(R.id.verify);
         resetPass = findViewById(R.id.ResetpasswordBtn);
-        profileImageView = findViewById(R.id.profileimage );
+
         mchangeprofile = findViewById(R.id.changeprofile);
+
+
+
+
 
          user = fAuth.getCurrentUser();
 
@@ -167,10 +192,36 @@ public class Profile extends AppCompatActivity {
         if (requestCode == 1000) {
             if(resultCode == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
-                profileImageView.setImageURI(imageUri);
+                //profileImageView.setImageURI(imageUri);
+
+                uploadImageToFirebase(imageUri);
 
 
             }
         }
+    }
+
+    private void uploadImageToFirebase(Uri imageUri) {
+        // upload Image to Firebase storage
+        StorageReference fileRef = storageReference.child ("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(Profile.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(profileImageView);
+                    }
+                });
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Profile.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
