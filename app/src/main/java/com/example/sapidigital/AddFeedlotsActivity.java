@@ -174,7 +174,6 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
             } catch (WriterException e) {
                 // this method is called for
                 // exception handling.
-                Log.e("Tag", e.toString());
             }
 
         }
@@ -255,7 +254,6 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                                 fileReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Log.e("lklkl ",uri.toString());
                                         data.put("foto",uri.toString());
                                         firestoreDB.collection("feedlots").document(docs).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -282,7 +280,6 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                         });
 
                     }else{
-                        Log.e("sss ","masukk" );
                         firestoreDB.collection("feedlots").document(docs).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
