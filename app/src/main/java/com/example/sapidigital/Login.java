@@ -15,12 +15,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sapidigital.utils.Preferences;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Login extends AppCompatActivity {
 
@@ -29,12 +34,13 @@ public class Login extends AppCompatActivity {
     TextView mCreateAcc,mReset;
     ProgressBar progressBarlogin;
     FirebaseAuth fAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final CollectionReference usersCollection = db.collection("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
@@ -81,8 +87,23 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            usersCollection.whereEqualTo("email",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            if(document.getString("email").equals(email)){
+                                                Preferences.setId(getBaseContext(),document.getString("id"));
+                                                Preferences.setRole(getBaseContext(),document.getString("role"));
+                                                Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                            }else{
+                                                Toast.makeText(Login.this, "Akun tidak diketahui", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                }
+                            });
                         } else {
                             Toast.makeText(Login.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBarlogin.setVisibility(View.GONE);
@@ -141,4 +162,6 @@ public class Login extends AppCompatActivity {
         });
 
     }
+
+
 }

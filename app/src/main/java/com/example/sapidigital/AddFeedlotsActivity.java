@@ -8,10 +8,14 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,11 +23,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.sapidigital.models.FeedLotsModel;
 import com.example.sapidigital.utils.DatePickerFragment;
+import com.example.sapidigital.utils.Preferences;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,17 +39,25 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.zxing.WriterException;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
+
 public class AddFeedlotsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    ImageView iv_sapi;
+    ImageView iv_sapi,qr;
     Spinner sp_gender;
+    TextView title_app;
+    String docs = "";
+    String parse_image = "";
     EditText edt_jenis,edt_umur,edt_bobot,edt_riwayat;
     Button btn_date, btn_image, btn_submit;
     List<String> listGender = new ArrayList<String>();
@@ -49,18 +65,25 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
     String genderValue = "betina";
     StorageReference storageReference;
     private static final int PICK_IMAGE = 100;
+    QRGEncoder qrgEncoder;
     public static final String DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static Random RANDOM = new Random();
 
+    String myDate= "Pilih Tanggal";
     Uri imageUri;
     private FirebaseFirestore firestoreDB;
     ProgressDialog progressDialog;
+    String TAG = "GENERATORQR";
+
+    Bitmap bmQr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_feedlots);
         sp_gender = (Spinner) findViewById(R.id.sp_gender);
+        qr = (ImageView) findViewById(R.id.qr);
+        title_app = (TextView) findViewById(R.id.title_app);
         edt_jenis = (EditText) findViewById(R.id.edt_jenis);
         edt_bobot = (EditText) findViewById(R.id.edt_bobot);
         edt_umur = (EditText) findViewById(R.id.edt_umur);
@@ -71,12 +94,91 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         iv_sapi = (ImageView) findViewById(R.id.iv_sapi);
         firestoreDB = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference(); //To Upload Image
-
+        String idLogin = Preferences.getIdLogin(AddFeedlotsActivity.this);
+        String role = Preferences.getRoleLogin(AddFeedlotsActivity.this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, gender);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_gender.setAdapter(adapter);
         sp_gender.setOnItemSelectedListener(this);
+
+
+        Intent i= getIntent();
+        String jenis = i.getStringExtra("jenis");
+        String status = i.getStringExtra("status");
+        parse_image = i.getStringExtra("image");
+        String parse_umur = i.getStringExtra("umur");
+        String parse_riwayat = i.getStringExtra("riwayat");
+        String parse_bobot = i.getStringExtra("bobot");
+        String parse_date = i.getStringExtra("tgl");
+        String parse_gender = i.getStringExtra("gender");
+        String parse_user = i.getStringExtra("user");
+        docs = i.getStringExtra("doc");
+
+        if(status !=null ){
+            if(parse_user.equals(idLogin)){
+                title_app.setText("Update Data");
+            }else{
+                edt_riwayat.setEnabled(false);
+                edt_umur.setEnabled(false);
+                edt_bobot.setEnabled(false);
+                edt_jenis.setEnabled(false);
+                edt_jenis.setEnabled(false);
+                btn_submit.setVisibility(View.GONE);
+                btn_image.setVisibility(View.GONE);
+                title_app.setText("");
+            }
+            qr.setVisibility(View.VISIBLE);
+            edt_jenis.setText(jenis);
+            Glide.with(AddFeedlotsActivity.this)
+                    .load(parse_image)
+                    .error(R.drawable.button_pilihan)
+                    .placeholder(R.drawable.button_pilihan)
+                    .error(R.drawable.button_pilihan)
+                    .into(iv_sapi);
+            edt_bobot.setText(parse_bobot);
+            edt_umur.setText(parse_umur);
+            edt_riwayat.setText(parse_riwayat);
+            btn_date.setText(parse_date);
+            genderValue = parse_gender;
+            sp_gender.setSelection(((ArrayAdapter<String>)sp_gender.getAdapter()).getPosition(genderValue));
+
+            WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+            // initializing a variable for default display.
+            Display display = manager.getDefaultDisplay();
+
+            // creating a variable for point which
+            // is to be displayed in QR Code.
+            Point point = new Point();
+            display.getSize(point);
+
+            // getting width and
+            // height of a point
+            int width = point.x;
+            int height = point.y;
+
+            // generating dimension from width and height.
+            int dimen = width < height ? width : height;
+            dimen = dimen * 3 / 4;
+
+            // setting this dimensions inside our qr code
+            // encoder to generate our qr code.
+            qrgEncoder = new QRGEncoder(parse_user, null, QRGContents.Type.TEXT, dimen);
+            try {
+                // getting our qrcode in the form of bitmap.
+                bmQr = qrgEncoder.encodeAsBitmap();
+                // the bitmap is set inside our image
+                // view using .setimagebitmap method.
+                qr.setImageBitmap(bmQr);
+            } catch (WriterException e) {
+                // this method is called for
+                // exception handling.
+                Log.e("Tag", e.toString());
+            }
+
+        }
+
 
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +191,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View view) {
                 showDialogs();
-
+                if(status==null){
                 StorageReference fileReference = storageReference.child(System.currentTimeMillis()
                         + "." + getFileExtension(imageUri));
 
@@ -100,10 +202,18 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Map feedLotsModel = new FeedLotsModel(randomString(10),edt_jenis.getText().toString(),edt_umur.getText().toString(), genderValue,
-                                                edt_bobot.getText().toString(), btn_date.getText().toString(),
-                                                uri.toString(), edt_riwayat.getText().toString()).toMap();
-
+                                        Map feedLotsModel = new FeedLotsModel(
+                                                randomString(10),
+                                                edt_jenis.getText().toString(),
+                                                edt_umur.getText().toString(),
+                                                genderValue,
+                                                edt_bobot.getText().toString(),
+                                                myDate,
+                                                uri.toString(),
+                                                edt_riwayat.getText().toString(),
+                                                idLogin,
+                                                myDate)
+                                                .toMap();
                                         firestoreDB.collection("feedlots")
                                                 .add(feedLotsModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
@@ -116,6 +226,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
+                                                progressDialog.dismiss();
                                                 Toast.makeText(getApplicationContext(), "Note could not be added!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
@@ -127,7 +238,67 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(AddFeedlotsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });
+                });}else{
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("bobot_terakhir", edt_bobot.getText().toString());
+                    data.put("jenis_sapi", edt_jenis.getText().toString());
+                    data.put("riwayat", edt_riwayat.getText().toString());
+                    data.put("umur_sapi", edt_umur.getText().toString());
+                    data.put("tgl", myDate);
+                    if(imageUri != null){
+//                        Uri urlUri = Uri.parse(imageUri);
+                        StorageReference fileReference2 = storageReference.child(System.currentTimeMillis()
+                                + "." + getFileExtension(imageUri));
+                        fileReference2.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                fileReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Log.e("lklkl ",uri.toString());
+                                        data.put("foto",uri.toString());
+                                        firestoreDB.collection("feedlots").document(docs).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getApplicationContext(), "Successfull Update Data", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(getApplicationContext(),FeedLotsAcitivity.class));
+                                                finish();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(AddFeedlotsActivity.this, "gagal " + e, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        progressDialog.dismiss();
+                                    }
+                                });
+                            }
+                        });
+
+                    }else{
+                        Log.e("sss ","masukk" );
+                        firestoreDB.collection("feedlots").document(docs).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getApplicationContext(), "Successfull Update Data", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),FeedLotsAcitivity.class));
+                                finish();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(AddFeedlotsActivity.this, "gagal " + e, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
             }
         });
         btn_image.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +315,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         progressDialog.setTitle("Please wait"); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
         progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
     }
 
     private void openGallery() {
@@ -173,6 +344,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                 String hari = "" + datePicker.getDayOfMonth();
                 String text = hari + "-" + bulan + "-" + tahun;
                 btn_date.setText(text);
+                myDate = text;
             }
         });
     }

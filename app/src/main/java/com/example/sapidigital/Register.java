@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sapidigital.utils.Preferences;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 public class Register extends AppCompatActivity {
@@ -37,6 +40,11 @@ public class Register extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseFirestore fStore;
     String userID;
+    SharedPreferences.Editor editor;
+
+    public static final String DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static Random RANDOM = new Random();
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +103,7 @@ public class Register extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
 
                     // register the user in firebase
-
+                    String id = randomString(5);
                     fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -121,13 +129,18 @@ public class Register extends AppCompatActivity {
                                 Map<String,Object> user = new HashMap<>();
                                 user.put("fName",fullname);
                                 user.put("email",email);
+                                user.put("id",userID);
+                                user.put("role","USER");
                                 documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d(TAG, "onSuccess: user Profile is created for " + userID);
                                     }
                                 });
-                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+//                                Preferences.setId(getBaseContext(),userID);
+                                Toast.makeText(Register.this, "Berhasil registrasi", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),Login.class));
 
                             }else {
                                 Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -151,4 +164,15 @@ public class Register extends AppCompatActivity {
         });
 
     }
+
+    public static String randomString(int len) {
+        StringBuilder sb = new StringBuilder(len);
+
+        for (int i = 0; i < len; i++) {
+            sb.append(DATA.charAt(RANDOM.nextInt(DATA.length())));
+        }
+
+        return sb.toString();
+    }
+
 }

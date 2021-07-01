@@ -22,6 +22,8 @@ class FeedLotsAcitivity : AppCompatActivity() {
     var db = FirebaseFirestore.getInstance()
     var flCollection = db.collection("feedlots")
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed_lots_acitivity)
@@ -42,10 +44,11 @@ class FeedLotsAcitivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 val document = task.result
                 if (!document!!.isEmpty) {
-                    for (doc in task.result!!) {
-                        val note = doc.toObject(FeedLotsModel::class.java)
-//                        note. = doc.getString("name")
-                        flList.add(note)
+                    for (docs in task.result!!) {
+//                        flCollection.document(doc.id).delete()
+                        val fl = docs.toObject(FeedLotsModel::class.java)
+                        fl.doc = docs.id
+                        flList.add(fl)
                     }
                     mAdapter = FeedLotsAdapter(this, flList)
                     mAdapter.notifyDataSetChanged()

@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.sapidigital.utils.Preferences;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mprofileBtn = findViewById(R.id.ProfileBtn);
         btn_feedlots = findViewById(R.id.btn_feedlots);
-
 
 
         btn_feedlots.setOnClickListener(new View.OnClickListener() {

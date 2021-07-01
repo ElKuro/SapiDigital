@@ -1,6 +1,8 @@
 package com.example.sapidigital.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.sapidigital.AddFeedlotsActivity
 import com.example.sapidigital.R
 import com.example.sapidigital.models.FeedLotsModel
 
@@ -38,16 +41,19 @@ class FeedLotsAdapter(var c: Context, private var myList: ArrayList<FeedLotsMode
                 .error(R.drawable.button_pilihan)
                 .into(holder.image)
         holder.detail.setOnClickListener {
-//            val mIntent = Intent(c, TampilanAkhir::class.java)
-//
-//            //data yang dikirim ke activity TampilanAkhir
-//            mIntent.putExtra("name", data.name)
-//            mIntent.putExtra("address", data.alamat)
-//            mIntent.putExtra("telp", data.telp)
-//            mIntent.putExtra("img", data.image)
-//            mIntent.putExtra("asd", data.tes)
-//            mIntent.putExtra("id", data.id.toString())
-//            c.startActivity(mIntent)
+            Log.e("shhshs ", data.tgl)
+            val mIntent = Intent(c, AddFeedlotsActivity::class.java)
+            mIntent.putExtra("umur", data.umur_sapi)
+            mIntent.putExtra("riwayat", data.riwayat)
+            mIntent.putExtra("bobot", data.bobot_terakhir)
+            mIntent.putExtra("jenis", data.jenis_sapi)
+            mIntent.putExtra("image", data.foto)
+            mIntent.putExtra("status", "update")
+            mIntent.putExtra("tgl", data.tgl)
+            mIntent.putExtra("gender", data.gender)
+            mIntent.putExtra("user", data.user)
+            mIntent.putExtra("doc", data.doc)
+            c.startActivity(mIntent)
         }
         mLastPosition = position
     }

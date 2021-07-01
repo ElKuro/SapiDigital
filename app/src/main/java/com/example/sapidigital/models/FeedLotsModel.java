@@ -12,13 +12,27 @@ public class FeedLotsModel {
     private String tanggal_bobot;
     private String foto;
     private String riwayat;
+    private String user;
+    private String tgl;
+    private String doc;
 
     public FeedLotsModel(){
 
     }
 
 
-    public FeedLotsModel(String id, String jenis_sapi, String umur_sapi, String gender, String bobot_terakhir, String tanggal_bobot, String foto, String riwayat) {
+    public FeedLotsModel(
+            String id,
+            String jenis_sapi,
+            String umur_sapi,
+            String gender,
+            String bobot_terakhir,
+            String tanggal_bobot,
+            String foto,
+            String riwayat,
+            String user,
+            String tgl
+            ) {
         this.id = id;
         this.jenis_sapi = jenis_sapi;
         this.umur_sapi = umur_sapi;
@@ -27,8 +41,18 @@ public class FeedLotsModel {
         this.tanggal_bobot = tanggal_bobot;
         this.foto = foto;
         this.riwayat = riwayat;
+        this.user = user;
+        this.tgl = tgl;
     }
 
+
+    public String getDoc() {
+        return doc;
+    }
+
+    public void setDoc(String doc) {
+        this.doc = doc;
+    }
 
     public String getId() {
         return id;
@@ -94,6 +118,22 @@ public class FeedLotsModel {
         this.riwayat = riwayat;
     }
 
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getTgl() {
+        return tgl;
+    }
+
+    public void setTgl(String tgl) {
+        this.tgl = tgl;
+    }
+
     public Map toMap() {
         HashMap result = new HashMap<>();
         result.put("id", this.id);
@@ -103,6 +143,8 @@ public class FeedLotsModel {
         result.put("bobot_terakhir", this.bobot_terakhir);
         result.put("foto", this.foto);
         result.put("riwayat", this.riwayat);
+        result.put("user", this.user);
+        result.put("tgl", this.tgl);
 
         return result;
     }
