@@ -18,16 +18,6 @@ public class FeedLotsModel {
     }
 
 
-    public FeedLotsModel(String jenis_sapi, String umur_sapi, String gender, String bobot_terakhir, String tanggal_bobot, String foto, String riwayat) {
-        this.jenis_sapi = jenis_sapi;
-        this.umur_sapi = umur_sapi;
-        this.gender = gender;
-        this.bobot_terakhir = bobot_terakhir;
-        this.tanggal_bobot = tanggal_bobot;
-        this.foto = foto;
-        this.riwayat = riwayat;
-    }
-
     public FeedLotsModel(String id, String jenis_sapi, String umur_sapi, String gender, String bobot_terakhir, String tanggal_bobot, String foto, String riwayat) {
         this.id = id;
         this.jenis_sapi = jenis_sapi;
@@ -106,6 +96,7 @@ public class FeedLotsModel {
 
     public Map toMap() {
         HashMap result = new HashMap<>();
+        result.put("id", this.id);
         result.put("jenis_sapi", this.jenis_sapi);
         result.put("umur_sapi", this.umur_sapi);
         result.put("gender", this.gender);

@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public class AddFeedlotsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -48,6 +49,8 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
     String genderValue = "betina";
     StorageReference storageReference;
     private static final int PICK_IMAGE = 100;
+    public static final String DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static Random RANDOM = new Random();
 
     Uri imageUri;
     private FirebaseFirestore firestoreDB;
@@ -97,7 +100,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Map feedLotsModel = new FeedLotsModel(edt_jenis.getText().toString(),edt_umur.getText().toString(), genderValue,
+                                        Map feedLotsModel = new FeedLotsModel(randomString(10),edt_jenis.getText().toString(),edt_umur.getText().toString(), genderValue,
                                                 edt_bobot.getText().toString(), btn_date.getText().toString(),
                                                 uri.toString(), edt_riwayat.getText().toString()).toMap();
 
@@ -190,4 +193,13 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
+    public static String randomString(int len) {
+        StringBuilder sb = new StringBuilder(len);
+
+        for (int i = 0; i < len; i++) {
+            sb.append(DATA.charAt(RANDOM.nextInt(DATA.length())));
+        }
+
+        return sb.toString();
+    }
 }
