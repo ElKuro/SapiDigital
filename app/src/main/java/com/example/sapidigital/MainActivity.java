@@ -11,16 +11,23 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button mprofileBtn;
+    Button mprofileBtn,btn_feedlots;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mprofileBtn = findViewById(R.id.ProfileBtn);
+        btn_feedlots = findViewById(R.id.btn_feedlots);
 
 
 
+        btn_feedlots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,FeedLotsAcitivity.class));
+            }
+        });
 
         mprofileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
