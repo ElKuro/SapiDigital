@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".penyembelih.AddPenyembelihanActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tambah Penyembelih"
+        android:textSize="30sp" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama Penyembelih"
+        android:id="@+id/edt_name_penyembelih"
+        />
+
+
+    <Button
+        android:id="@+id/btn_tgl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tanggal" />
+
+
+    <Button
+        android:id="@+id/btn_vidio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload Vidio" />
+
+
+
+    <Button
+        android:id="@+id/btn_submit_penyembelih"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
+</LinearLayout>

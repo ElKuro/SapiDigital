@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".pemeriksa.AddPemeriksaanActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tambah Pemeriksaan"
+        android:textSize="30sp" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="nama pemeriksa"
+        android:id="@+id/edt_np"
+        />
+
+
+    <Button
+        android:id="@+id/btn_tp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tanggal" />
+
+
+    <Button
+        android:id="@+id/btn_sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Surat Pemeriksaan" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_sp"
+        />
+
+    <Spinner
+        android:id="@+id/sp_hp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"/>
+
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Keterangan"
+        android:id="@+id/edt_kt"
+        />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
+</LinearLayout>

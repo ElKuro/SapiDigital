@@ -95,6 +95,7 @@ public class Login extends AppCompatActivity {
                                             if(document.getString("email").equals(email)){
                                                 Preferences.setId(getBaseContext(),document.getString("id"));
                                                 Preferences.setRole(getBaseContext(),document.getString("role"));
+                                                Preferences.setEmail(getBaseContext(),document.getString("email"));
                                                 Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                             }else{

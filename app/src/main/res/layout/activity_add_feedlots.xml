@@ -29,33 +29,94 @@
         android:textSize="30sp"
         />
 
-    <EditText
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Jenis ..."
-        android:id="@+id/edt_jenis"
-        />
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jenis Sapi "
+            android:gravity="center"
+            android:layout_weight="2"
+            />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Umur ..."
-        android:id="@+id/edt_umur"
-        />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jenis ..."
+            android:layout_weight="1"
+            android:id="@+id/edt_jenis"
+            />
 
-    <Spinner
-        android:id="@+id/sp_gender"
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Umur Sapi"
+            android:gravity="center"
+            android:layout_weight="2"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Umur ..."
+            android:layout_weight="1"
+            android:id="@+id/edt_umur"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gender Sapi"
+            android:gravity="center"
+            android:layout_weight="2"
+            />
+
+        <Spinner
+            android:id="@+id/sp_gender"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bobot Sapi"
+            android:gravity="center"
+            android:layout_weight="2"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -64,13 +125,76 @@
             android:layout_weight="1"
             android:id="@+id/edt_bobot"
             />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Riwayat Sapi"
+            android:gravity="center"
+            android:layout_weight="2"
+            />
+
+        <EditText
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Riwayat ..."
+            android:id="@+id/edt_riwayat"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Keterangan"
+            android:gravity="center"
+            android:layout_weight="2"
+            />
+
+        <EditText
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="..."
+            android:id="@+id/edt_ket"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal"
+            android:gravity="center"
+            android:layout_weight="2"
+            />
 
         <Button
             android:id="@+id/btn_date"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="tanggal" />
+            android:text="pilih tanggal" />
 
     </LinearLayout>
 
@@ -79,27 +203,52 @@
         android:id="@+id/btn_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Uplaod Foto" />
+        android:text="Uplaod Foto Sapi" />
 
-    <ImageView
-        android:layout_width="200dp"
-        android:id="@+id/iv_sapi"
-        android:layout_gravity="center"
-        android:visibility="visible"
-        android:layout_height="200dp"/>
-    <EditText
-        android:layout_marginTop="20dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Riwayat ..."
-        android:id="@+id/edt_riwayat"
-        />
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:text="Photo"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/iv_sapi"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:layout_height="200dp"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit" />
+
+    <Button
+        android:id="@+id/btn_periksa"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Periksa" />
+
+    <Button
+        android:id="@+id/btn_penyembelih"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Penyembelih" />
 
 </LinearLayout>
 </ScrollView>

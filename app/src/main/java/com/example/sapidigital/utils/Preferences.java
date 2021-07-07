@@ -12,6 +12,7 @@ public class Preferences {
     static final String KEY_STATUS_SEDANG_LOGIN = "Status_logged_in";
     static final String ID = "ID";
     static final String ROLE = "ROLE";
+    static final String EMAIL = "EMAIL";
 
     /** Pendlakarasian Shared Preferences yang berdasarkan paramater context */
     private static SharedPreferences getSharedPreference(Context context){
@@ -36,6 +37,10 @@ public class Preferences {
 
     public static String getRoleLogin(Context context){
         return getSharedPreference(context).getString(ROLE,"");
+    }
+
+    public static String getEmailLogin(Context context){
+        return getSharedPreference(context).getString(EMAIL,"");
     }
 
     /** Deklarasi Edit Preferences dan mengubah data
@@ -78,6 +83,12 @@ public class Preferences {
     public static void setRole(Context context, String role){
         SharedPreferences.Editor editor = getSharedPreference(context).edit();
         editor.putString(ROLE,role);
+        editor.apply();
+    }
+
+    public static void setEmail(Context context, String email){
+        SharedPreferences.Editor editor = getSharedPreference(context).edit();
+        editor.putString(EMAIL,email);
         editor.apply();
     }
     /** Mengembalikan nilai dari key KEY_STATUS_SEDANG_LOGIN berupa boolean */

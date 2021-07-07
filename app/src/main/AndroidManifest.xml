@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SapiDigital">
-        <activity android:name=".UpdateFeedLots"></activity>
+        <activity android:name=".penyembelih.AddPenyembelihanActivity"></activity>
+        <activity android:name=".penyembelih.PenyembelihActivity" />
+        <activity android:name=".pemeriksa.AddPemeriksaanActivity" />
+        <activity android:name=".pemeriksa.PemeriksaanActivity" />
+        <activity android:name=".UpdateFeedLots" />
         <activity android:name=".AddFeedlotsActivity" />
         <activity android:name=".FeedLotsAcitivity" />
         <activity android:name=".Test" />

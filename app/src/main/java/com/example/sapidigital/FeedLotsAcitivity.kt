@@ -2,17 +2,17 @@ package com.example.sapidigital
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sapidigital.adapter.FeedLotsAdapter
 import com.example.sapidigital.models.FeedLotsModel
+import com.example.sapidigital.utils.Preferences
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_feed_lots_acitivity.*
 
@@ -23,13 +23,21 @@ class FeedLotsAcitivity : AppCompatActivity() {
     var flCollection = db.collection("feedlots")
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed_lots_acitivity)
+        setTitle("Feedlots")
+
+        val role = Preferences.getRoleLogin(this@FeedLotsAcitivity)
+        if (role.equals("USER")) {
+            btn_add_hewan.visibility = View.VISIBLE
+        } else {
+            btn_add_hewan.visibility = View.GONE
+        }
+
         Init();
 
-        btn_add_hewan?.setOnClickListener{
+        btn_add_hewan?.setOnClickListener {
             startActivity(Intent(this@FeedLotsAcitivity, AddFeedlotsActivity::class.java))
         }
     }
@@ -54,7 +62,7 @@ class FeedLotsAcitivity : AppCompatActivity() {
                     mAdapter.notifyDataSetChanged()
                     recyclerviewFL.adapter = mAdapter
 
-                    if(flList.size <1){
+                    if (flList.size < 1) {
                         Toast.makeText(this, "tidak ada data", Toast.LENGTH_SHORT).show()
                     }
                 } else {
@@ -64,5 +72,24 @@ class FeedLotsAcitivity : AppCompatActivity() {
                 println(task.exception)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this@FeedLotsAcitivity, MainActivity::class.java))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.action_more -> Init()
+        }
+        return super.onOptionsItemSelected(item)
+
     }
 }

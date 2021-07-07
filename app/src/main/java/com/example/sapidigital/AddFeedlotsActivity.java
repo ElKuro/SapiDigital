@@ -12,7 +12,6 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,13 +22,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sapidigital.models.FeedLotsModel;
+import com.example.sapidigital.pemeriksa.AddPemeriksaanActivity;
+import com.example.sapidigital.pemeriksa.PemeriksaanActivity;
+import com.example.sapidigital.penyembelih.PenyembelihActivity;
 import com.example.sapidigital.utils.DatePickerFragment;
 import com.example.sapidigital.utils.Preferences;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,13 +42,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.zxing.WriterException;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -57,9 +56,10 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
     Spinner sp_gender;
     TextView title_app;
     String docs = "";
+    String parse_id = "";
     String parse_image = "";
-    EditText edt_jenis,edt_umur,edt_bobot,edt_riwayat;
-    Button btn_date, btn_image, btn_submit;
+    EditText edt_jenis,edt_umur,edt_bobot,edt_riwayat,edt_ket;
+    Button btn_date, btn_periksa,btn_penyembelih,btn_image, btn_submit;
     List<String> listGender = new ArrayList<String>();
     String[] gender = {"betina", "jantan"};
     String genderValue = "betina";
@@ -88,8 +88,11 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         edt_bobot = (EditText) findViewById(R.id.edt_bobot);
         edt_umur = (EditText) findViewById(R.id.edt_umur);
         edt_riwayat = (EditText) findViewById(R.id.edt_riwayat);
+        edt_ket = (EditText) findViewById(R.id.edt_ket);
         btn_date = (Button) findViewById(R.id.btn_date);
         btn_submit = (Button) findViewById(R.id.btn_submit);
+        btn_periksa = (Button) findViewById(R.id.btn_periksa);
+        btn_penyembelih = (Button) findViewById(R.id.btn_penyembelih);
         btn_image = (Button) findViewById(R.id.btn_image);
         iv_sapi = (ImageView) findViewById(R.id.iv_sapi);
         firestoreDB = FirebaseFirestore.getInstance();
@@ -108,19 +111,31 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         String status = i.getStringExtra("status");
         parse_image = i.getStringExtra("image");
         String parse_umur = i.getStringExtra("umur");
+        String parse_ket = i.getStringExtra("ket");
         String parse_riwayat = i.getStringExtra("riwayat");
         String parse_bobot = i.getStringExtra("bobot");
+        parse_id = i.getStringExtra("id");
         String parse_date = i.getStringExtra("tgl");
         String parse_gender = i.getStringExtra("gender");
         String parse_user = i.getStringExtra("user");
         docs = i.getStringExtra("doc");
 
+        if(role.equals("PEMERIKSA")){
+            title_app.setText("Periksa Hewan");
+            btn_periksa.setVisibility(View.VISIBLE);
+        }
+        if(role.equals("PENYEMBELIH")){
+            title_app.setText("Penyembelihan");
+            btn_penyembelih.setVisibility(View.VISIBLE);
+        }
         if(status !=null ){
             if(parse_user.equals(idLogin)){
-                title_app.setText("Update Data");
+                title_app.setText("");
             }else{
+
                 edt_riwayat.setEnabled(false);
                 edt_umur.setEnabled(false);
+                edt_ket.setEnabled(false);
                 edt_bobot.setEnabled(false);
                 edt_jenis.setEnabled(false);
                 edt_jenis.setEnabled(false);
@@ -138,6 +153,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                     .into(iv_sapi);
             edt_bobot.setText(parse_bobot);
             edt_umur.setText(parse_umur);
+            edt_ket.setText(parse_ket);
             edt_riwayat.setText(parse_riwayat);
             btn_date.setText(parse_date);
             genderValue = parse_gender;
@@ -164,7 +180,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
 
             // setting this dimensions inside our qr code
             // encoder to generate our qr code.
-            qrgEncoder = new QRGEncoder(parse_user, null, QRGContents.Type.TEXT, dimen);
+            qrgEncoder = new QRGEncoder(parse_id, null, QRGContents.Type.TEXT, dimen);
             try {
                 // getting our qrcode in the form of bitmap.
                 bmQr = qrgEncoder.encodeAsBitmap();
@@ -211,7 +227,8 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                                                 uri.toString(),
                                                 edt_riwayat.getText().toString(),
                                                 idLogin,
-                                                myDate)
+                                                myDate,
+                                                edt_ket.getText().toString())
                                                 .toMap();
                                         firestoreDB.collection("feedlots")
                                                 .add(feedLotsModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -244,6 +261,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                     data.put("riwayat", edt_riwayat.getText().toString());
                     data.put("umur_sapi", edt_umur.getText().toString());
                     data.put("tgl", myDate);
+                    data.put("ket", edt_ket.getText().toString());
                     if(imageUri != null){
 //                        Uri urlUri = Uri.parse(imageUri);
                         StorageReference fileReference2 = storageReference.child(System.currentTimeMillis()
@@ -304,6 +322,24 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                 openGallery();
             }
         });
+
+        btn_penyembelih.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ii=new Intent(getApplicationContext(), PenyembelihActivity.class);
+                ii.putExtra("id_fl", parse_id);
+                startActivity(ii);
+            }
+        });
+
+        btn_periksa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ii=new Intent(getApplicationContext(), PemeriksaanActivity.class);
+                ii.putExtra("id_fl", parse_id);
+                startActivity(ii);
+            }
+        });
     }
 
     private void showDialogs() {
@@ -312,7 +348,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         progressDialog.setTitle("Please wait"); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
         progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(true);
+        progressDialog.setCancelable(false);
     }
 
     private void openGallery() {
@@ -370,5 +406,12 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent ii=new Intent(getApplicationContext(), FeedLotsAcitivity.class);
+        startActivity(ii);
     }
 }

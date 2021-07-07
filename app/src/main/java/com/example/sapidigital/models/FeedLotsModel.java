@@ -15,6 +15,7 @@ public class FeedLotsModel {
     private String user;
     private String tgl;
     private String doc;
+    private String ket;
 
     public FeedLotsModel(){
 
@@ -31,7 +32,8 @@ public class FeedLotsModel {
             String foto,
             String riwayat,
             String user,
-            String tgl
+            String tgl,
+            String ket
             ) {
         this.id = id;
         this.jenis_sapi = jenis_sapi;
@@ -43,8 +45,17 @@ public class FeedLotsModel {
         this.riwayat = riwayat;
         this.user = user;
         this.tgl = tgl;
+        this.ket = ket;
     }
 
+
+    public String getKet() {
+        return ket;
+    }
+
+    public void setKet(String ket) {
+        this.ket = ket;
+    }
 
     public String getDoc() {
         return doc;
@@ -145,6 +156,7 @@ public class FeedLotsModel {
         result.put("riwayat", this.riwayat);
         result.put("user", this.user);
         result.put("tgl", this.tgl);
+        result.put("ket", this.ket);
 
         return result;
     }

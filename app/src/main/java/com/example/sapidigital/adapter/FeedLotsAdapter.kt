@@ -47,11 +47,13 @@ class FeedLotsAdapter(var c: Context, private var myList: ArrayList<FeedLotsMode
             mIntent.putExtra("riwayat", data.riwayat)
             mIntent.putExtra("bobot", data.bobot_terakhir)
             mIntent.putExtra("jenis", data.jenis_sapi)
+            mIntent.putExtra("ket", data.ket)
             mIntent.putExtra("image", data.foto)
             mIntent.putExtra("status", "update")
             mIntent.putExtra("tgl", data.tgl)
             mIntent.putExtra("gender", data.gender)
             mIntent.putExtra("user", data.user)
+            mIntent.putExtra("id", data.id)
             mIntent.putExtra("doc", data.doc)
             c.startActivity(mIntent)
         }
