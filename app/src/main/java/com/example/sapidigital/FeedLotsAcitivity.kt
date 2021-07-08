@@ -5,16 +5,18 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sapidigital.adapter.FeedLotsAdapter
 import com.example.sapidigital.models.FeedLotsModel
 import com.example.sapidigital.utils.Preferences
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.android.synthetic.main.activity_feed_lots_acitivity.*
+import de.hdodenhof.circleimageview.CircleImageView
 
 class FeedLotsAcitivity : AppCompatActivity() {
     private lateinit var flList: ArrayList<FeedLotsModel>
@@ -22,17 +24,23 @@ class FeedLotsAcitivity : AppCompatActivity() {
     var db = FirebaseFirestore.getInstance()
     var flCollection = db.collection("feedlots")
 
+    var recyclerviewFL: RecyclerView? = null
+    var btn_add_hewan: Button? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed_lots_acitivity)
         setTitle("Feedlots")
 
+        btn_add_hewan = findViewById(R.id.btn_add_hewan)
+        recyclerviewFL = findViewById(R.id.recyclerviewFL)
+
         val role = Preferences.getRoleLogin(this@FeedLotsAcitivity)
         if (role.equals("USER")) {
-            btn_add_hewan.visibility = View.VISIBLE
+            btn_add_hewan?.visibility = View.VISIBLE
         } else {
-            btn_add_hewan.visibility = View.GONE
+            btn_add_hewan?.visibility = View.GONE
         }
 
         Init();
@@ -45,7 +53,7 @@ class FeedLotsAcitivity : AppCompatActivity() {
     private fun Init() {
         flList = ArrayList()
         mAdapter = FeedLotsAdapter(this, flList)
-        recyclerviewFL.layoutManager = LinearLayoutManager(this)
+        recyclerviewFL?.layoutManager = LinearLayoutManager(this)
 
         flCollection.get().addOnCompleteListener { task: Task<QuerySnapshot> ->
             flList.clear()
@@ -60,7 +68,7 @@ class FeedLotsAcitivity : AppCompatActivity() {
                     }
                     mAdapter = FeedLotsAdapter(this, flList)
                     mAdapter.notifyDataSetChanged()
-                    recyclerviewFL.adapter = mAdapter
+                    recyclerviewFL?.adapter = mAdapter
 
                     if (flList.size < 1) {
                         Toast.makeText(this, "tidak ada data", Toast.LENGTH_SHORT).show()

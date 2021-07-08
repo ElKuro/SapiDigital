@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sapidigital.AddFeedlotsActivity
 import com.example.sapidigital.MainActivity
 import com.example.sapidigital.R
@@ -15,7 +17,6 @@ import com.example.sapidigital.models.PenyembelihanModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.android.synthetic.main.activity_penyembelih.*
 
 class PenyembelihActivity : AppCompatActivity() {
 
@@ -24,11 +25,17 @@ class PenyembelihActivity : AppCompatActivity() {
     var db = FirebaseFirestore.getInstance()
     var id_fl= "";
     var flCollection = db.collection("penyembelihan")
+    var btn_add_penyembelihan: Button? = null
+    var rc_penyembelih: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_penyembelih)
         setTitle("Penyembelihan")
+        btn_add_penyembelihan = findViewById(R.id.btn_add_penyembelihan)
+        rc_penyembelih = findViewById(R.id.rc_penyembelih)
+
+
         val iin = intent
         val b = iin.extras
 
@@ -38,7 +45,7 @@ class PenyembelihActivity : AppCompatActivity() {
         }
 
         inits()
-        btn_add_penyembelihan.setOnClickListener {
+        btn_add_penyembelihan?.setOnClickListener {
             val ii = Intent(applicationContext, AddPenyembelihanActivity::class.java)
             ii.putExtra("id_fl", id_fl)
             startActivity(ii)
@@ -48,7 +55,7 @@ class PenyembelihActivity : AppCompatActivity() {
     private fun inits() {
         flList = ArrayList()
         mAdapter = PenyembelihanAdapter(this, flList)
-        rc_penyembelih.layoutManager = LinearLayoutManager(this)
+        rc_penyembelih?.layoutManager = LinearLayoutManager(this)
 
         flCollection.whereEqualTo("fl_id",id_fl).get().addOnCompleteListener { task: Task<QuerySnapshot> ->
             flList.clear()
@@ -60,7 +67,7 @@ class PenyembelihActivity : AppCompatActivity() {
                         flList.add(fl)
                     }
                     mAdapter = PenyembelihanAdapter(this, flList)
-                    rc_penyembelih.adapter = mAdapter
+                    rc_penyembelih?.adapter = mAdapter
 
                     if(flList.size <1){
                         Toast.makeText(this, "tidak ada data", Toast.LENGTH_SHORT).show()

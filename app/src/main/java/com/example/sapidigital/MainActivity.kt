@@ -4,17 +4,19 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.example.sapidigital.utils.Preferences
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_pemeriksaan.*
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,31 +24,43 @@ class MainActivity : AppCompatActivity() {
     var db = FirebaseFirestore.getInstance()
     var flCollection = db.collection("feedlots")
     private var pressedTime: Long = 0
+    var tv_name: TextView? = null
+    var btn_scan: CardView? = null
+    var btn_feedlots: CardView? = null
+    var ProfileBtn: CardView? = null
+    var logoutBtn: CardView? = null
+
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        tv_name = findViewById(R.id.tv_name)
+        btn_scan = findViewById(R.id.btn_scan)
+        btn_feedlots = findViewById(R.id.btn_feedlots)
+        ProfileBtn = findViewById(R.id.ProfileBtn)
+        logoutBtn = findViewById(R.id.logoutBtn)
 
         val email = Preferences.getEmailLogin(this@MainActivity)
-        tv_name.text = "     $email"
+        tv_name?.text = "     $email"
 
-        btn_scan.setOnClickListener{
+        btn_scan?.setOnClickListener{
             val intentIntegrator = IntentIntegrator(this@MainActivity)
             intentIntegrator.setPrompt("Scan a barcode or QR Code")
             intentIntegrator.setOrientationLocked(true)
             intentIntegrator.initiateScan()
         }
 
-        btn_feedlots.setOnClickListener{
+        btn_feedlots?.setOnClickListener{
             startActivity(Intent(this@MainActivity, FeedLotsAcitivity::class.java))
         }
 
-        ProfileBtn.setOnClickListener{
+        ProfileBtn?.setOnClickListener{
             startActivity(Intent(applicationContext, Profile::class.java))
             finish()
         }
 
-        logoutBtn.setOnClickListener {
+        logoutBtn?.setOnClickListener {
             logout();
         }
     }
