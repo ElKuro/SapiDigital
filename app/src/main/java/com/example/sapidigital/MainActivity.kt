@@ -35,12 +35,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+
         tv_name = findViewById(R.id.tv_name)
         btn_scan = findViewById(R.id.btn_scan)
         btn_feedlots = findViewById(R.id.btn_feedlots)
         ProfileBtn = findViewById(R.id.ProfileBtn)
         logoutBtn = findViewById(R.id.logoutBtn)
-
         val email = Preferences.getEmailLogin(this@MainActivity)
         tv_name?.text = "     $email"
 

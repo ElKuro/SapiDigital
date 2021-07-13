@@ -135,7 +135,10 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         if(status !=null ){
             if(parse_user.equals(idLogin)){
                 title_app.setText("");
-                btn_lokasi.setVisibility(View.GONE);
+                btn_periksa.setVisibility(View.VISIBLE);
+                btn_penyembelih.setVisibility(View.VISIBLE);
+                btn_lokasi.setVisibility(View.VISIBLE);
+                btn_submit.setText("update");
             }else{
                 edt_riwayat.setEnabled(false);
                 edt_umur.setEnabled(false);
