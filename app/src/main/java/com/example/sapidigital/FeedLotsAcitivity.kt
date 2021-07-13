@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sapidigital.adapter.FeedLotsAdapter
@@ -16,7 +17,7 @@ import com.example.sapidigital.utils.Preferences
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import de.hdodenhof.circleimageview.CircleImageView
+
 
 class FeedLotsAcitivity : AppCompatActivity() {
     private lateinit var flList: ArrayList<FeedLotsModel>
@@ -53,7 +54,9 @@ class FeedLotsAcitivity : AppCompatActivity() {
     private fun Init() {
         flList = ArrayList()
         mAdapter = FeedLotsAdapter(this, flList)
-        recyclerviewFL?.layoutManager = LinearLayoutManager(this)
+//        recyclerviewFL?.layoutManager = LinearLayoutManager(this)
+
+        recyclerviewFL?.setLayoutManager(GridLayoutManager(this, 2))
 
         flCollection.get().addOnCompleteListener { task: Task<QuerySnapshot> ->
             flList.clear()

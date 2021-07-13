@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.sapidigital.lokasi.LokasiActivity;
 import com.example.sapidigital.models.FeedLotsModel;
 import com.example.sapidigital.pemeriksa.AddPemeriksaanActivity;
 import com.example.sapidigital.pemeriksa.PemeriksaanActivity;
@@ -59,7 +61,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
     String parse_id = "";
     String parse_image = "";
     EditText edt_jenis,edt_umur,edt_bobot,edt_riwayat,edt_ket;
-    Button btn_date, btn_periksa,btn_penyembelih,btn_image, btn_submit;
+    Button btn_date, btn_periksa,btn_penyembelih,btn_image, btn_submit,btn_lokasi;
     List<String> listGender = new ArrayList<String>();
     String[] gender = {"betina", "jantan"};
     String genderValue = "betina";
@@ -77,6 +79,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
 
     Bitmap bmQr;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +94,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         edt_ket = (EditText) findViewById(R.id.edt_ket);
         btn_date = (Button) findViewById(R.id.btn_date);
         btn_submit = (Button) findViewById(R.id.btn_submit);
+        btn_lokasi = (Button) findViewById(R.id.btn_lokasi);
         btn_periksa = (Button) findViewById(R.id.btn_periksa);
         btn_penyembelih = (Button) findViewById(R.id.btn_penyembelih);
         btn_image = (Button) findViewById(R.id.btn_image);
@@ -120,27 +124,33 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         String parse_user = i.getStringExtra("user");
         docs = i.getStringExtra("doc");
 
+
         if(role.equals("PEMERIKSA")){
             title_app.setText("Periksa Hewan");
-            btn_periksa.setVisibility(View.VISIBLE);
         }
         if(role.equals("PENYEMBELIH")){
             title_app.setText("Penyembelihan");
-            btn_penyembelih.setVisibility(View.VISIBLE);
         }
+
         if(status !=null ){
             if(parse_user.equals(idLogin)){
                 title_app.setText("");
+                btn_lokasi.setVisibility(View.GONE);
             }else{
-
                 edt_riwayat.setEnabled(false);
                 edt_umur.setEnabled(false);
+                sp_gender.setEnabled(false);
+                sp_gender.setClickable(false);
+                btn_date.setEnabled(false);
                 edt_ket.setEnabled(false);
                 edt_bobot.setEnabled(false);
                 edt_jenis.setEnabled(false);
                 edt_jenis.setEnabled(false);
                 btn_submit.setVisibility(View.GONE);
                 btn_image.setVisibility(View.GONE);
+                btn_periksa.setVisibility(View.VISIBLE);
+                btn_penyembelih.setVisibility(View.VISIBLE);
+                btn_lokasi.setVisibility(View.VISIBLE);
                 title_app.setText("");
             }
             qr.setVisibility(View.VISIBLE);
@@ -199,6 +209,15 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View view) {
                 tampilTanggal();
+            }
+        });
+
+        btn_lokasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ii=new Intent(getApplicationContext(), LokasiActivity.class);
+                ii.putExtra("id_fl", parse_id);
+                startActivity(ii);
             }
         });
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".penyembelih.AddPenyembelihanActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tambah Pemeliharaan"
+        android:textSize="30sp" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tempat Pemeliharaan"
+        android:id="@+id/edt_tempat_pemeliharaan"
+        />
+
+
+    <Button
+        android:id="@+id/btn_tgl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tanggal" />
+
+
+
+
+
+    <Button
+        android:id="@+id/btn_submit_penyembelih"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sapidigital.R
 import com.example.sapidigital.adapter.PemeriksaanAdapter
 import com.example.sapidigital.models.PemeriksaanModel
+import com.example.sapidigital.utils.Preferences
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -29,9 +31,16 @@ class PemeriksaanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pemeriksaan)
         setTitle("Pemeriksaan")
+
+
         btn_add_pemeriksaan = findViewById(R.id.btn_add_pemeriksaan)
         rc_pemeriksa = findViewById(R.id.rc_pemeriksa)
-
+        val role = Preferences.getRoleLogin(this@PemeriksaanActivity)
+        if(role == "PEMERIKSA"){
+            btn_add_pemeriksaan?.visibility = View.VISIBLE
+        }else{
+            btn_add_pemeriksaan?.visibility = View.GONE
+        }
         val iin = intent
         val b = iin.extras
 
@@ -53,6 +62,7 @@ class PemeriksaanActivity : AppCompatActivity() {
         flList = ArrayList()
         mAdapter = PemeriksaanAdapter(this, flList)
         rc_pemeriksa?.layoutManager = LinearLayoutManager(this)
+
 
         flCollection.whereEqualTo("fl_id", id_fl).get().addOnCompleteListener { task: Task<QuerySnapshot> ->
             flList.clear()

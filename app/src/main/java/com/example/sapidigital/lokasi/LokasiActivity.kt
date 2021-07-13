@@ -1,4 +1,4 @@
-package com.example.sapidigital.penyembelih
+package com.example.sapidigital.lokasi
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,74 +10,69 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sapidigital.AddFeedlotsActivity
-import com.example.sapidigital.MainActivity
 import com.example.sapidigital.R
-import com.example.sapidigital.adapter.PenyembelihanAdapter
-import com.example.sapidigital.models.PenyembelihanModel
+import com.example.sapidigital.adapter.LokasiAdapter
+import com.example.sapidigital.models.LokasiModel
 import com.example.sapidigital.utils.Preferences
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 
-class PenyembelihActivity : AppCompatActivity() {
-
-    private lateinit var flList: ArrayList<PenyembelihanModel>
-    private lateinit var mAdapter: PenyembelihanAdapter
+class LokasiActivity : AppCompatActivity() {
+    private lateinit var flList: ArrayList<LokasiModel>
+    private lateinit var mAdapter: LokasiAdapter
     var db = FirebaseFirestore.getInstance()
-    var id_fl= "";
-    var flCollection = db.collection("penyembelihan")
-    var btn_add_penyembelihan: Button? = null
-    var rc_penyembelih: RecyclerView? = null
+    var id_fl = "";
+    var flCollection = db.collection("lokasi")
+    var btn_add_lokasi: Button? = null
+    var recyclerviewlokasi: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_penyembelih)
-        setTitle("Penyembelihan")
-        btn_add_penyembelihan = findViewById(R.id.btn_add_penyembelihan)
-        rc_penyembelih = findViewById(R.id.rc_penyembelih)
+        setContentView(R.layout.activity_lokasi_acitivity)
+        setTitle("Pemeliharaan")
 
-        val role = Preferences.getRoleLogin(this@PenyembelihActivity)
-        if(role == "PENYEMBELIH"){
-            btn_add_penyembelihan?.visibility = View.VISIBLE
-        }else{
-            btn_add_penyembelihan?.visibility = View.GONE
-        }
+
+        btn_add_lokasi = findViewById(R.id.btn_add_lokasi)
+        recyclerviewlokasi = findViewById(R.id.recyclerviewlokasi)
+        val role = Preferences.getRoleLogin(this@LokasiActivity)
 
         val iin = intent
         val b = iin.extras
 
-        if(b != null){
+        if (b != null) {
             val j = b["id_fl"] as String?
             id_fl = j.toString();
         }
 
         inits()
-        btn_add_penyembelihan?.setOnClickListener {
-            val ii = Intent(applicationContext, AddPenyembelihanActivity::class.java)
-            ii.putExtra("id_fl", id_fl)
-            startActivity(ii)
+
+        btn_add_lokasi?.setOnClickListener {
+            if(!id_fl.equals("")){
+                val ii = Intent(applicationContext, AddLokasiActivity::class.java)
+                ii.putExtra("id_fl", id_fl)
+                startActivity(ii)
+            }
         }
     }
 
     private fun inits() {
         flList = ArrayList()
-        mAdapter = PenyembelihanAdapter(this, flList)
-        rc_penyembelih?.layoutManager = LinearLayoutManager(this)
+        mAdapter = LokasiAdapter(this, flList)
+        recyclerviewlokasi?.layoutManager = LinearLayoutManager(this)
 
-        flCollection.whereEqualTo("fl_id",id_fl).get().addOnCompleteListener { task: Task<QuerySnapshot> ->
-            flList.clear()
+        flCollection.whereEqualTo("id_fl", id_fl).get().addOnCompleteListener { task: Task<QuerySnapshot> ->
             if (task.isSuccessful) {
                 val document = task.result
                 if (!document!!.isEmpty) {
                     for (docs in task.result!!) {
-                        val fl = docs.toObject(PenyembelihanModel::class.java)
+                        val fl = docs.toObject(LokasiModel::class.java)
                         flList.add(fl)
                     }
-                    mAdapter = PenyembelihanAdapter(this, flList)
-                    rc_penyembelih?.adapter = mAdapter
+                    mAdapter = LokasiAdapter(this, flList)
+                    recyclerviewlokasi?.adapter = mAdapter
 
-                    if(flList.size <1){
+                    if (flList.size < 1) {
                         Toast.makeText(this, "tidak ada data", Toast.LENGTH_SHORT).show()
                     }
                 } else {
@@ -104,3 +99,6 @@ class PenyembelihActivity : AppCompatActivity() {
 
     }
 }
+
+
+

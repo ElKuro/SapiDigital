@@ -18,6 +18,8 @@
         <activity android:name=".penyembelih.PenyembelihActivity" />
         <activity android:name=".pemeriksa.AddPemeriksaanActivity" />
         <activity android:name=".pemeriksa.PemeriksaanActivity" />
+        <activity android:name=".lokasi.LokasiActivity" />
+        <activity android:name=".lokasi.AddLokasiActivity" />
         <activity android:name=".UpdateFeedLots" />
         <activity android:name=".AddFeedlotsActivity" />
         <activity android:name=".FeedLotsAcitivity" />

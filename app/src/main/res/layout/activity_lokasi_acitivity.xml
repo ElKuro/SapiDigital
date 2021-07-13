@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FeedLotsAcitivity">
+
+    <Button
+        android:layout_width="match_parent"
+        android:background="@drawable/button_pilihan"
+        android:text="Tambah Pemeliharaan"
+        android:layout_margin="12dp"
+        android:id="@+id/btn_add_lokasi"
+        android:layout_height="wrap_content"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerviewlokasi"
+        tools:listitem="@layout/item_lokasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

@@ -40,7 +40,7 @@ class FeedLotsAdapter(var c: Context, private var myList: ArrayList<FeedLotsMode
                 .placeholder(R.drawable.button_pilihan)
                 .error(R.drawable.button_pilihan)
                 .into(holder.image)
-        holder.detail.setOnClickListener {
+        holder.itemView.setOnClickListener {
             Log.e("shhshs ", data.tgl)
             val mIntent = Intent(c, AddFeedlotsActivity::class.java)
             mIntent.putExtra("umur", data.umur_sapi)
@@ -65,12 +65,10 @@ class FeedLotsAdapter(var c: Context, private var myList: ArrayList<FeedLotsMode
     }
 
     inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
-        var detail: Button
         var image: ImageView
         var name: TextView
 
         init {
-            detail = parent.findViewById(R.id.btn_detail) as Button
             image = parent.findViewById(R.id.iv_image) as ImageView
             name = parent.findViewById(R.id.tv_name) as TextView
         }

@@ -244,6 +244,13 @@
         android:text="Periksa" />
 
     <Button
+        android:id="@+id/btn_lokasi"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pemeliharaan" />
+
+    <Button
         android:id="@+id/btn_penyembelih"
         android:visibility="gone"
         android:layout_width="match_parent"
