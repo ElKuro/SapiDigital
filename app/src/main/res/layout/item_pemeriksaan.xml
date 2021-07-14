@@ -69,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
-                    android:background="@drawable/button_pilihan"
+                    android:background="@color/grey"
                     android:text="Lihat Surat Pemeriksaan" />
             </LinearLayout>
 

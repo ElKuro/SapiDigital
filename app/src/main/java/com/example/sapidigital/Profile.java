@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,9 +49,11 @@ public class Profile extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
-    Button mHome,resendCode,resetPass,mchangeprofile;
+    Button resendCode,resetPass,mchangeprofile,company;
     FirebaseUser user;
+    ImageView Back;
     StorageReference storageReference;
+
 
 
 
@@ -77,7 +81,7 @@ public class Profile extends AppCompatActivity {
 
 
 
-        mHome = findViewById(R.id.Home);
+        Back = findViewById(R.id.back);
         fullname = findViewById(R.id.profilename);
         email = findViewById(R.id.profileemail);
         phone = findViewById(R.id.profilephone);
@@ -85,6 +89,7 @@ public class Profile extends AppCompatActivity {
         userId = fAuth.getCurrentUser().getUid();
         msgverify = findViewById(R.id.verify);
         resetPass = findViewById(R.id.ResetpasswordBtn);
+        company = findViewById(R.id.company);
 
         mchangeprofile = findViewById(R.id.changeprofile);
 
@@ -133,16 +138,31 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        company.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Company.class));
+                finish();
+            }
+        });
+
         mchangeprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open gallery
-                Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media. EXTERNAL_CONTENT_URI);
-                startActivityForResult(openGalleryIntent,1000);
+                Intent i = new Intent(v.getContext(),edit_profile.class);
+                i.putExtra("email",email.getText().toString());
+                i.putExtra("phone",phone.getText().toString());
+                i.putExtra("fullname",fullname.getText().toString());
+                i.putExtra("address",address.getText().toString());
+
+                startActivity(i);
+
+
             }
         });
 
-        mHome.setOnClickListener(new View.OnClickListener() {
+        Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -182,46 +202,13 @@ public class Profile extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 email.setText(documentSnapshot.getString("email"));
                 fullname.setText(documentSnapshot.getString("fName"));
+                phone.setText(documentSnapshot.getString("phone"));
+                address.setText(documentSnapshot.getString("address"));
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000) {
-            if(resultCode == Activity.RESULT_OK){
-                Uri imageUri = data.getData();
-                //profileImageView.setImageURI(imageUri);
-
-                uploadImageToFirebase(imageUri);
 
 
-            }
-        }
-    }
 
-    private void uploadImageToFirebase(Uri imageUri) {
-        // upload Image to Firebase storage
-        StorageReference fileRef = storageReference.child ("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
-        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(Profile.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(profileImageView);
-                    }
-                });
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Profile.this, "Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
 }

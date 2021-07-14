@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">SapiDigital</string>
+
+    <string-array name="Role">
+
+        <item>Feedlots</item>
+        <item>Veterinarian</item>
+        <item>Butcher</item>
+    </string-array>
+    <string-array name="Role_id">
+
+        <item>USERS</item>
+        <item>PEMERIKSA</item>
+        <item>PENYEMBELIH</item>
+    </string-array>
+
+
+
+
 </resources>

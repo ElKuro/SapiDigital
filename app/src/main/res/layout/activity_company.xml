@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Profile">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,24 +25,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="User Profile"
+            android:text="Occupation Profile"
             android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:gravity="center_horizontal"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_home_24"
             android:layout_alignParentRight="true"
-            android:textStyle="normal"
-            android:textSize="15dp"/>
-
-
-
-
-
+            />
     </LinearLayout>
 
 
@@ -51,14 +47,7 @@
         android:layout_marginTop="50dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/verify"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email Not Verified  ! Verify Now"
-            android:textAlignment="center"
-            android:textColor="#FF1100"
-            android:visibility="invisible" />
+
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -79,19 +68,19 @@
             <ImageView
                 android:id="@+id/imageView8"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
             <TextView
 
-                android:id="@+id/profilename"
+                android:id="@+id/Profullname"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Your Name"
+                android:hint="Not Registered"
                 android:textSize="20dp" />
 
         </LinearLayout>
@@ -104,17 +93,17 @@
             <ImageView
                 android:id="@+id/imageView9"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/ic_baseline_email_24" />
 
             <TextView
-                android:id="@+id/profileemail"
+                android:id="@+id/Proemail"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:autoSizeMaxTextSize="@dimen/browser_actions_context_menu_max_width"
                 android:inputType="textPersonName"
-                android:text="Email"
+                android:hint="Not Registered"
                 android:textSize="20dp" />
         </LinearLayout>
 
@@ -126,17 +115,16 @@
             <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/ic_baseline_local_phone_24" />
 
             <TextView
-                android:id="@+id/profilephone"
+                android:id="@+id/Prophone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:inputType="phone"
-                android:text="Phone Number"
+                android:text="Not Registered"
                 android:textSize="20dp" />
 
         </LinearLayout>
@@ -149,7 +137,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your Address :"
+                android:text="Address :"
                 android:textSize="15dp"
                 />
 
@@ -158,27 +146,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:hint="Your Address" />
-
-            <Button
-                android:id="@+id/changeprofile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Change Profile" />
+                android:hint="Not Registered" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/company"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="occupation Profile" />
-
 
         <Button
-            android:id="@+id/ResetpasswordBtn"
+            android:id="@+id/changeprofile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Reset Password" />
+            android:layout_marginTop="20dp"
+            android:text="Edit Profile" />
+        <Button
+            android:id="@+id/docfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Download Document" />
 
     </LinearLayout>
 

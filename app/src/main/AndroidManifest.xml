@@ -13,8 +13,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SapiDigital">
-        <activity android:name=".penyembelih.AddPenyembelihanActivity"></activity>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".edit_company"></activity>
+        <activity android:name=".Company" />
+        <activity android:name=".edit_profile" />
+        <activity android:name=".penyembelih.AddPenyembelihanActivity" />
         <activity android:name=".penyembelih.PenyembelihActivity" />
         <activity android:name=".pemeriksa.AddPemeriksaanActivity" />
         <activity android:name=".pemeriksa.PemeriksaanActivity" />
