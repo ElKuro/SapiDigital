@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         logoutBtn?.setOnClickListener {
-            logout();
+            logout()
         }
     }
 

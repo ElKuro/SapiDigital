@@ -36,7 +36,7 @@ import java.util.Map;
 
 public class AddPenyembelihanActivity extends AppCompatActivity {
 
-    EditText edt_name_penyembelih;
+    EditText edt_name_penyembelih,berat_daging;
     Button btn_tgl,btn_vidio,btn_submit_penyembelih;
     private final int PICK_PDF_CODE = 2342;
     private Uri filepath;
@@ -52,6 +52,7 @@ public class AddPenyembelihanActivity extends AppCompatActivity {
         btn_submit_penyembelih  = findViewById(R.id.btn_submit_penyembelih);
         btn_vidio  = findViewById(R.id.btn_vidio);
         btn_tgl  = findViewById(R.id.btn_tgl);
+        berat_daging = findViewById((R.id.berat_daging));
         edt_name_penyembelih  = findViewById(R.id.edt_name_penyembelih);
         storageReference = FirebaseStorage.getInstance().getReference(); //To Upload Image
         String idLogin = Preferences.getIdLogin(AddPenyembelihanActivity.this);
@@ -100,6 +101,7 @@ public class AddPenyembelihanActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     Map penyembelihan = new PenyembelihanModel(
                                             edt_name_penyembelih.getText().toString(),
+                                            berat_daging.getText().toString(),
                                             btn_tgl.getText().toString(),
                                             uri.toString(),
                                             id_fl

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PemeriksaanModel {
+    String berat_sapi;
     String name;
     String tgl;
     String hasil_pemeriksaan;
@@ -14,13 +15,22 @@ public class PemeriksaanModel {
     public PemeriksaanModel() {
     }
 
-    public PemeriksaanModel(String name, String tgl, String hasil_pemeriksaan, String surat_pemeriksaan, String ket,  String fl_id) {
+    public PemeriksaanModel(String berat_sapi, String name, String tgl, String hasil_pemeriksaan, String surat_pemeriksaan, String ket,  String fl_id) {
+        this.berat_sapi = berat_sapi;
         this.name = name;
         this.tgl = tgl;
         this.hasil_pemeriksaan = hasil_pemeriksaan;
         this.surat_pemeriksaan = surat_pemeriksaan;
         this.ket = ket;
         this.fl_id = fl_id;
+    }
+
+    public String getBerat_sapi() {
+        return berat_sapi;
+    }
+
+    public void setBerat_sapi(String berat_sapi) {
+        this.berat_sapi = berat_sapi;
     }
 
     public String getName() {
@@ -74,6 +84,7 @@ public class PemeriksaanModel {
 
     public Map toMap() {
         HashMap result = new HashMap<>();
+        result.put("berat_sapi", this.berat_sapi);
         result.put("fl_id", this.fl_id);
         result.put("hasil_pemeriksaan", this.hasil_pemeriksaan);
         result.put("ket", this.ket);

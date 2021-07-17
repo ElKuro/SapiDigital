@@ -2,12 +2,12 @@ package com.example.sapidigital;
 
 public class Roles {
 
-    public  String id;
+    public  String nama;
     public  String roles;
 
-    public  Roles(String id, String roles){
+    public  Roles(String nama, String roles){
         this.roles = roles;
-        this.id = id;
+        this.nama = nama;
 
     }
 

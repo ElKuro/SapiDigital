@@ -33,8 +33,9 @@ class PenyembelihanAdapter(var c: Context, private var myList: ArrayList<Penyemb
     //set view
     override fun onBindViewHolder(holder: PenyembelihanAdapter.RecyclerItemViewHolder, position: Int) {
         var data = myList!![position];
-        holder.tv_tgl_penyembelih.setText(data.tgl)
         holder.tv_name_penyembelih.setText(data.name)
+        holder.tv_tgl_penyembelih.setText(data.tgl)
+        holder.tv_berat_daging.setText(data.berat_daging)
         holder.btn_vidio.setOnClickListener {
             Log.e("das", "asdhk");
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data.vidio))
@@ -54,11 +55,13 @@ class PenyembelihanAdapter(var c: Context, private var myList: ArrayList<Penyemb
     inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
         var tv_tgl_penyembelih: TextView
         var tv_name_penyembelih: TextView
+        var tv_berat_daging: TextView
         var btn_vidio: Button
 
         init {
             tv_tgl_penyembelih = parent.findViewById(R.id.tv_tgl_penyembelih) as TextView
             tv_name_penyembelih = parent.findViewById(R.id.tv_name_penyembelih) as TextView
+            tv_berat_daging = parent.findViewById(R.id.tv_berat_daging) as TextView
             btn_vidio = parent.findViewById(R.id.btn_vidio) as Button
         }
 

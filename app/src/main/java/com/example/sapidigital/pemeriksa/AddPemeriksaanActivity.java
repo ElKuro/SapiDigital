@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class AddPemeriksaanActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Spinner sp_hp;
-    EditText edt_np,edt_kt;
+    EditText edt_np,edt_kt,berat_sapi;
     Button btn_tp,btn_sp,btn_submit;
     ProgressDialog progressDialog;
     TextView tv_sp;
@@ -55,7 +55,7 @@ public class AddPemeriksaanActivity extends AppCompatActivity implements Adapter
     String id_fl = "";
     StorageReference storageReference;
     private FirebaseFirestore firestoreDB;
-    String[] hp_list = {"Boleh disembelih", "Ditunda untuk disembelih","Disembelih dengan syarat","Ditolak untuk disembelih"};
+    String[] hp_list = {"Boleh disembelih", "Ditunda untuk disembelih","Disembelih dengan syarat","Ditolak untuk disembelih","Pemeriksaan Biasa"};
     String hpValue = "Boleh disembelih";
     private final int PICK_PDF_CODE = 2342;
 
@@ -63,6 +63,7 @@ public class AddPemeriksaanActivity extends AppCompatActivity implements Adapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pemeriksaan);
+        berat_sapi = findViewById(R.id.tv_berat_sapi);
         sp_hp  = findViewById(R.id.sp_hp);
         edt_np  = findViewById(R.id.edt_np);
         edt_kt  = findViewById(R.id.edt_kt);
@@ -111,12 +112,13 @@ public class AddPemeriksaanActivity extends AppCompatActivity implements Adapter
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     Map pemeriksaanModel = new PemeriksaanModel(
-                                      edt_np.getText().toString(),
-                                      btn_tp.getText().toString(),
-                                      hpValue,
-                                      uri.toString(),
-                                      edt_kt.getText().toString(),
-                                      id_fl
+                                            berat_sapi.getText().toString(),
+                                            edt_np.getText().toString(),
+                                            btn_tp.getText().toString(),
+                                            hpValue,
+                                            uri.toString(),
+                                            edt_kt.getText().toString(),
+                                            id_fl
                                     ).toMap();
                                     firestoreDB.collection("pemeriksaan")
                                             .add(pemeriksaanModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

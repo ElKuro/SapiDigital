@@ -98,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/mo_re"
-                    android:text="Feedlots"
+                    android:text="Data Management"
+                    android:textAlignment="center"
                     android:textColor="@color/textcardColor"
                     android:textSize="14sp"
                     android:textStyle="bold" />

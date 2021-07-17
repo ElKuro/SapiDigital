@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,6 +28,7 @@ class FeedLotsAcitivity : AppCompatActivity() {
 
     var recyclerviewFL: RecyclerView? = null
     var btn_add_hewan: Button? = null
+    var back : ImageView? =null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,7 @@ class FeedLotsAcitivity : AppCompatActivity() {
         setTitle("Feedlots")
 
         btn_add_hewan = findViewById(R.id.btn_add_hewan)
+        back = findViewById(R.id.back)
         recyclerviewFL = findViewById(R.id.recyclerviewFL)
 
         val role = Preferences.getRoleLogin(this@FeedLotsAcitivity)
@@ -49,6 +52,10 @@ class FeedLotsAcitivity : AppCompatActivity() {
         btn_add_hewan?.setOnClickListener {
             startActivity(Intent(this@FeedLotsAcitivity, AddFeedlotsActivity::class.java))
         }
+        back?.setOnClickListener {
+            startActivity(Intent(this@FeedLotsAcitivity, MainActivity::class.java))
+        }
+
     }
 
     private fun Init() {

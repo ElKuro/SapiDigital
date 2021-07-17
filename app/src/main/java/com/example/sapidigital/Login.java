@@ -97,7 +97,9 @@ public class Login extends AppCompatActivity {
                                                 Preferences.setRole(getBaseContext(),document.getString("role"));
                                                 Preferences.setEmail(getBaseContext(),document.getString("email"));
                                                 Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                                                
                                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
                                             }else{
                                                 Toast.makeText(Login.this, "Akun tidak diketahui", Toast.LENGTH_SHORT).show();
                                             }
@@ -107,11 +109,11 @@ public class Login extends AppCompatActivity {
                             });
                         } else {
                             Toast.makeText(Login.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBarlogin.setVisibility(View.GONE);
                         }
 
                     }
                 });
+                progressBarlogin.setVisibility(View.GONE);
 
 
 

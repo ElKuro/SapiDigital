@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Tambah Penyembelih"
+        android:text="Penyembelihan"
         android:textSize="30sp" />
 
     <EditText
@@ -22,7 +22,13 @@
         android:hint="Nama Penyembelih"
         android:id="@+id/edt_name_penyembelih"
         />
-
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Berat Daging"
+        android:id="@+id/berat_daging"
+        />
 
     <Button
         android:id="@+id/btn_tgl"

@@ -48,19 +48,8 @@
         android:orientation="vertical">
 
 
-
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/Foto"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_launcher_background"
-            android:visibility="visible"
-            app:civ_border_color="@color/black"
-            app:civ_border_width="2dp" />
-
         <LinearLayout
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -144,7 +133,7 @@
                 android:id="@+id/profileaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
+                android:enabled="true"
                 android:hint="Your Address" />
 
             <Spinner
@@ -157,16 +146,25 @@
 
 
         <Button
+            android:id="@+id/docfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Document" />
+
+        <ImageView
+            android:id="@+id/Foto"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_launcher_background"
+            android:visibility="visible" />
+
+        <Button
             android:id="@+id/saveb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Save" />
-        <Button
-            android:id="@+id/docfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Upload Document" />
 
     </LinearLayout>
 

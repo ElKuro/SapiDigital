@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Layout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,15 +29,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Company extends AppCompatActivity {
 
-    CircleImageView profileImageView;
-    TextView Cfullname,Cemail,Cphone,Caddress;
+
+    TextView Cfullname,Cemail,Cphone,Caddress,Crole;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
-    Button mchangeprofile;
+    Button maddoccupation,mchangeprofile;
     FirebaseUser user;
-    ImageView Back,Home;
+    ImageView Back,Home,profileImageView;
     StorageReference storageReference;
+    View ocp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +66,16 @@ public class Company extends AppCompatActivity {
 
         Back = findViewById(R.id.back);
         Home = findViewById(R.id.home);
+        ocp = findViewById(R.id.occupation);
+        Crole = findViewById(R.id.userrole);
+
         Cfullname = findViewById(R.id.Profullname);
         Cemail = findViewById(R.id.Proemail);
         Cphone = findViewById(R.id.Prophone);
         Caddress = findViewById(R.id.profileaddress);
         userId = fAuth.getCurrentUser().getUid();
 
+        maddoccupation = findViewById(R.id.addoccupation);
         mchangeprofile = findViewById(R.id.changeprofile);
 
         user = fAuth.getCurrentUser();
@@ -88,20 +95,33 @@ public class Company extends AppCompatActivity {
             }
         });
 
+
+        maddoccupation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), edit_company.class);
+                i.putExtra("Cemail", Cemail.getText().toString());
+                i.putExtra("Cphone", Cphone.getText().toString());
+                i.putExtra("Cfullname", Cfullname.getText().toString());
+                i.putExtra("Caddress", Caddress.getText().toString());
+
+                startActivity(i);
+            }
+        });
         mchangeprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),edit_company.class);
-                i.putExtra("Cemail",Cemail.getText().toString());
-                i.putExtra("Cphone",Cphone.getText().toString());
-                i.putExtra("Cfullname",Cfullname.getText().toString());
-                i.putExtra("Caddress",Caddress.getText().toString());
+                Intent i = new Intent(getApplicationContext(), edit_company.class);
+                i.putExtra("Cemail", Cemail.getText().toString());
+                i.putExtra("Cphone", Cphone.getText().toString());
+                i.putExtra("Cfullname", Cfullname.getText().toString());
+                i.putExtra("Caddress", Caddress.getText().toString());
 
                 startActivity(i);
-
-
             }
         });
+
+
 
 
         DocumentReference documentReference = fStore.collection("users").document(userId);
@@ -112,7 +132,11 @@ public class Company extends AppCompatActivity {
                 Cfullname.setText(documentSnapshot.getString("CfName"));
                 Cphone.setText(documentSnapshot.getString("Cphone"));
                 Caddress.setText(documentSnapshot.getString("Caddress"));
+                Crole.setText(documentSnapshot.getString("role"));
             }
         });
-    }
-}
+
+
+
+
+}}

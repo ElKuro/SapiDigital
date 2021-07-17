@@ -24,6 +24,14 @@
         android:id="@+id/edt_np"
         />
 
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Berat sapi (KG)"
+        android:id="@+id/tv_berat_sapi"
+        />
+
 
     <Button
         android:id="@+id/btn_tp"
@@ -56,7 +64,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Keterangan"
+        android:hint="Keterangan berat/ pakan / lain-lain"
         android:id="@+id/edt_kt"
         />
 

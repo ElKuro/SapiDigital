@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,14 +45,14 @@ public class edit_company extends AppCompatActivity implements AdapterView.OnIte
     public static final String TAG = "TAG";
     EditText ECfullname,ECemail,ECphone;
     MultiAutoCompleteTextView ECaddress;
-    CircleImageView PFoto;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     FirebaseUser user;
-    Button saveb;
+    Button saveb,docfile;
     StorageReference storageReference;
-    ImageView Back,Home;
-    String NRole;
+    ImageView Back,Home,PFoto;
+
+
 
 
     @Override
@@ -71,6 +72,7 @@ public class edit_company extends AppCompatActivity implements AdapterView.OnIte
         user = fAuth.getCurrentUser();
         Back = findViewById(R.id.back);
         Home = findViewById(R.id.home);
+        docfile = findViewById(R.id.docfile);
 
 
         ECfullname = findViewById(R.id.Profullname);
@@ -86,7 +88,8 @@ public class edit_company extends AppCompatActivity implements AdapterView.OnIte
 
 
         Spinner spinnerrole = (Spinner) findViewById(R.id.Spinner1);
-        //String Roleid = spinnerrole.getSelectedItem().toString();
+
+
 
 
 
@@ -98,6 +101,20 @@ public class edit_company extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<Roles> SpinnerAdapter = new ArrayAdapter<Roles>(edit_company.this,
                 android.R.layout.simple_spinner_dropdown_item,rolesList);
         spinnerrole.setAdapter(SpinnerAdapter);
+
+
+
+
+        if(TextUtils.isEmpty(Cemail)){
+
+
+        }else {
+
+            spinnerrole.setVisibility(View.GONE);
+
+
+
+        }
 
 
 
@@ -114,7 +131,7 @@ public class edit_company extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        PFoto.setOnClickListener(new View.OnClickListener() {
+        docfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media. EXTERNAL_CONTENT_URI);
@@ -137,8 +154,14 @@ public class edit_company extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        spinnerrole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                Roles spnroles = (Roles) parent.getItemAtPosition(position);
+                Toast.makeText(edit_company.this, spnroles.roles,Toast.LENGTH_SHORT).show();
 
+                final String item = spnroles.nama;
 
         saveb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,49 +170,31 @@ public class edit_company extends AppCompatActivity implements AdapterView.OnIte
                 { Toast.makeText(edit_company.this, "Some Field are Emty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                final String email = ECemail.getText().toString();
-                user.updateEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        DocumentReference docRef = fStore.collection("users").document(user.getUid());
-                        Map<String,Object> edited = new HashMap<>();
-                        edited.put("Cemail",email);
-                        edited.put("CfName",ECfullname.getText().toString());
-                        edited.put("Cphone",ECphone.getText().toString());
-                        edited.put("Caddress",ECaddress.getText().toString());
-                        spinnerrole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                else {
+                    DocumentReference docRef = fStore.collection("users").document(user.getUid());
+                    Map<String, Object> edited = new HashMap<>();
+                    edited.put("Cemail", ECemail.getText().toString());
+                    edited.put("CfName", ECfullname.getText().toString());
+                    edited.put("Cphone", ECphone.getText().toString());
+                    edited.put("Caddress", ECaddress.getText().toString());
+                    edited.put("role", item);
+                    docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(edit_company.this, "Profile Update", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), Company.class));
+                            finish();
 
-                                Roles spnroles = (Roles) parent.getItemAtPosition(position);
-                                Toast.makeText(edit_company.this, spnroles.id,Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Toast.makeText(edit_company.this, "Prfile is changed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
-                        });
-                        edited.put("role",spinnerrole);
-                        docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(edit_company.this, "Profile Update", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(),Company.class));
-                                finish();
-
-                            }
-                        });
-                        Toast.makeText(edit_company.this, "Email is changed", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(edit_company.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
     }

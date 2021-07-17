@@ -22,21 +22,94 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_name_penyembelih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="test"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_tgl_penyembelih"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="test"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nama Penyembelih"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_name_penyembelih"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="test"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal Penyembelihan"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_tgl_penyembelih"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="test"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Berat daging  "
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_berat_daging"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="test"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="3"/>
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="KG"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="3"/>
+
+                </LinearLayout>
+
+
 
                 <Button
                     android:layout_width="match_parent"
@@ -44,7 +117,7 @@
                     android:text="Lihat Vidio"
                     android:layout_margin="12dp"
                     android:id="@+id/btn_vidio"
-                    android:layout_height="wrap_content"
+                    android:layout_height="26dp"
                     />
 
             </LinearLayout>

@@ -35,6 +35,7 @@ class PemeriksaanAdapter(var c: Context, private var myList: ArrayList<Pemeriksa
     //set view
     override fun onBindViewHolder(holder: PemeriksaanAdapter.RecyclerItemViewHolder, position: Int) {
         var data = myList!![position];
+        holder.tv_berat_sapi.setText(data.berat_sapi)
         holder.tv_hasil_pemeriksaan.setText(data.hasil_pemeriksaan)
         holder.tv_ket.setText(data.ket)
         holder.tv_name.setText(data.name)
@@ -52,6 +53,7 @@ class PemeriksaanAdapter(var c: Context, private var myList: ArrayList<Pemeriksa
     }
 
     inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
+        var tv_berat_sapi: TextView
         var iv_pemeriksaan: ImageView
         var tv_ket: TextView
         var tv_hasil_pemeriksaan: TextView
@@ -60,6 +62,7 @@ class PemeriksaanAdapter(var c: Context, private var myList: ArrayList<Pemeriksa
         var btn_sp: Button
 
         init {
+            tv_berat_sapi = parent.findViewById(R.id.tv_berat_sapi) as TextView
             tv_tgl = parent.findViewById(R.id.tv_tgl) as TextView
             tv_ket = parent.findViewById(R.id.tv_ket) as TextView
             tv_hasil_pemeriksaan = parent.findViewById(R.id.tv_hasil_pemeriksaan) as TextView

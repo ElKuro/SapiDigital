@@ -241,21 +241,21 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Periksa" />
+        android:text="Riwayat pemeriksaan" />
 
     <Button
         android:id="@+id/btn_lokasi"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pemeliharaan" />
+        android:text="Riwayat lokasi" />
 
     <Button
         android:id="@+id/btn_penyembelih"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Penyembelih" />
+        android:text="Penyembelihan" />
 
 </LinearLayout>
 </ScrollView>

@@ -10,7 +10,7 @@
     <Button
         android:layout_width="match_parent"
         android:background="@color/grey"
-        android:text="Tambah Penyembelihan"
+        android:text="Lakukan Penyembelihan"
         android:layout_margin="12dp"
         android:id="@+id/btn_add_penyembelihan"
         android:layout_height="wrap_content"

@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class PenyembelihanModel {
     String name;
+    String berat_daging;
     String tgl;
     String vidio;
     String fl_id;
@@ -13,8 +14,9 @@ public class PenyembelihanModel {
     public PenyembelihanModel() {
     }
 
-    public PenyembelihanModel(String name, String tgl, String vidio,  String fl_id) {
+    public PenyembelihanModel( String name,String berat_daging, String tgl, String vidio,  String fl_id) {
         this.name = name;
+        this.berat_daging = berat_daging;
         this.tgl = tgl;
         this.vidio = vidio;
         this.fl_id = fl_id;
@@ -27,6 +29,14 @@ public class PenyembelihanModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBerat_daging() {
+        return berat_daging;
+    }
+
+    public void setBerat_daging(String berat_daging) {
+        this.berat_daging = berat_daging;
     }
 
     public String getTgl() {
@@ -59,6 +69,7 @@ public class PenyembelihanModel {
         result.put("vidio", this.vidio);
         result.put("name", this.name);
         result.put("tgl", this.tgl);
+        result.put("berat_daging", this.berat_daging);
         return result;
     }
 

@@ -43,8 +43,8 @@ class LokasiAdapter(var c: Context, private var myList: ArrayList<LokasiModel>?)
         var tmpt: TextView
 
         init {
-            tgl = parent.findViewById(R.id.tv_tempat_lokasi) as TextView
-            tmpt = parent.findViewById(R.id.tv_tgl_lokasi) as TextView
+            tgl = parent.findViewById(R.id.tv_tgl_lokasi) as TextView
+            tmpt = parent.findViewById(R.id.tv_tempat_lokasi) as TextView
         }
 
     }
