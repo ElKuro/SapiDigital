@@ -60,7 +60,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
     String docs = "";
     String parse_id = "";
     String parse_image = "";
-    EditText edt_jenis,edt_umur,edt_bobot,edt_riwayat,edt_ket;
+    EditText edt_jenis,edt_umur,edt_bobot,edt_riwayat,edt_ket,no_ternak;
     Button btn_date, btn_periksa,btn_penyembelih,btn_image, btn_submit,btn_lokasi;
     List<String> listGender = new ArrayList<String>();
     String[] gender = {"betina", "jantan"};
@@ -86,6 +86,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_add_feedlots);
         sp_gender = (Spinner) findViewById(R.id.sp_gender);
         qr = (ImageView) findViewById(R.id.qr);
+        no_ternak = (EditText) findViewById(R.id.no_ternak);
         title_app = (TextView) findViewById(R.id.title_app);
         edt_jenis = (EditText) findViewById(R.id.edt_jenis);
         edt_bobot = (EditText) findViewById(R.id.edt_bobot);
@@ -111,6 +112,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
 
 
         Intent i= getIntent();
+        String noternak = i.getStringExtra("no_ternak");
         String jenis = i.getStringExtra("jenis");
         String status = i.getStringExtra("status");
         parse_image = i.getStringExtra("image");
@@ -144,6 +146,8 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                 edt_umur.setEnabled(false);
                 sp_gender.setEnabled(false);
                 sp_gender.setClickable(false);
+                no_ternak.setEnabled(false);
+                no_ternak.setClickable(false);
                 btn_date.setEnabled(false);
                 edt_ket.setEnabled(false);
                 edt_bobot.setEnabled(false);
@@ -157,6 +161,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                 title_app.setText("");
             }
             qr.setVisibility(View.VISIBLE);
+            no_ternak.setText(noternak);
             edt_jenis.setText(jenis);
             Glide.with(AddFeedlotsActivity.this)
                     .load(parse_image)
@@ -241,6 +246,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                                     public void onSuccess(Uri uri) {
                                         Map feedLotsModel = new FeedLotsModel(
                                                 randomString(10),
+                                                no_ternak.getText().toString(),
                                                 edt_jenis.getText().toString(),
                                                 edt_umur.getText().toString(),
                                                 genderValue,
@@ -278,6 +284,7 @@ public class AddFeedlotsActivity extends AppCompatActivity implements AdapterVie
                     }
                 });}else{
                     Map<String, Object> data = new HashMap<>();
+                    data.put("no_ternak",no_ternak.getText().toString());
                     data.put("bobot_terakhir", edt_bobot.getText().toString());
                     data.put("jenis_sapi", edt_jenis.getText().toString());
                     data.put("riwayat", edt_riwayat.getText().toString());

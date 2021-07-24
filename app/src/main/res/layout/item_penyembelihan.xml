@@ -3,18 +3,21 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="8dp"
+        android:layout_height="wrap_content"
         android:elevation="2dp"
-        android:layout_height="wrap_content">
+        app:cardCornerRadius="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#5177F607"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,20 +35,19 @@
                         android:id="@+id/textView2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nama Penyembelih"
                         android:layout_weight="1"
+                        android:text="Nama Penyembelih"
                         android:textColor="@color/black"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_name_penyembelih"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="test"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:layout_weight="1"
-                        />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -58,19 +60,19 @@
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tanggal Penyembelihan"
                         android:layout_weight="1"
+                        android:text="Tanggal Penyembelihan"
                         android:textColor="@color/black"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_tgl_penyembelih"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="test"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -86,45 +88,133 @@
                         android:layout_weight="2"
                         android:text="Berat daging  "
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_berat_daging"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
                         android:text="test"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:layout_weight="3"/>
+                        android:textStyle="bold" />
 
                     <TextView
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
                         android:text="KG"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:layout_weight="3"/>
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Indeks Warna Daging"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/warna_daging"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="test"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Indeks Warna Lemak"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/warna_lemak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="test"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Indeks Marbling"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/marbling"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="test"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
 
-
-                <Button
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:background="@color/grey"
-                    android:text="Lihat Vidio"
-                    android:layout_margin="12dp"
-                    android:id="@+id/btn_vidio"
-                    android:layout_height="26dp"
-                    />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_vidio"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_margin="12dp"
+                        android:layout_weight="1"
+                        android:background="@color/grey"
+                        android:text="Lihat Vidio" />
+
+                    <ImageView
+                        android:id="@+id/ic_delete"
+                        android:layout_width="44dp"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_delete" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
     <View
         android:layout_width="match_parent"
         android:background="@color/grey"

@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".edit_company"></activity>
+        <activity android:name=".mutu"></activity>
+        <activity android:name=".edit_company" />
         <activity android:name=".Company" />
         <activity android:name=".edit_profile" />
         <activity android:name=".penyembelih.AddPenyembelihanActivity" />

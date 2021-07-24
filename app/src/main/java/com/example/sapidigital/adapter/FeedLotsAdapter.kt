@@ -43,6 +43,7 @@ class FeedLotsAdapter(var c: Context, private var myList: ArrayList<FeedLotsMode
         holder.itemView.setOnClickListener {
             Log.e("shhshs ", data.tgl)
             val mIntent = Intent(c, AddFeedlotsActivity::class.java)
+            mIntent.putExtra("no_ternak", data.no_ternak)
             mIntent.putExtra("umur", data.umur_sapi)
             mIntent.putExtra("riwayat", data.riwayat)
             mIntent.putExtra("bobot", data.bobot_terakhir)

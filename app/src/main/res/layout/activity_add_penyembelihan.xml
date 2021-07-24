@@ -5,15 +5,47 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".penyembelih.AddPenyembelihanActivity">
+    tools:context=".penyembelih.AddPenyembelihanActivity"
+    android:background="@drawable/bg_sapi_green"
+    >
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Penyembelihan"
-        android:textSize="30sp" />
+        android:background="@color/grey"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Penyembelihan"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            android:src="@drawable/ic_baseline_home_24"/>
+
+
+    </LinearLayout>
+
+
 
     <EditText
         android:layout_marginTop="20dp"
@@ -21,6 +53,8 @@
         android:layout_height="wrap_content"
         android:hint="Nama Penyembelih"
         android:id="@+id/edt_name_penyembelih"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         />
     <EditText
         android:layout_marginTop="20dp"
@@ -28,7 +62,65 @@
         android:layout_height="wrap_content"
         android:hint="Berat Daging"
         android:id="@+id/berat_daging"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            >
+
+            <EditText
+                android:id="@+id/warna_daging"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:textSize="15sp"
+                android:hint="Standar Warna Daging"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/warna_lemak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:textSize="15sp"
+                android:hint="Standar Warna Lemak"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/marbling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:textSize="15sp"
+                android:hint="Standar Marbling"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_mutu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="Cek indeks mutu" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_tgl"

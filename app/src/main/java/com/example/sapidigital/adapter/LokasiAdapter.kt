@@ -30,6 +30,7 @@ class LokasiAdapter(var c: Context, private var myList: ArrayList<LokasiModel>?)
     override fun onBindViewHolder(holder: LokasiAdapter.RecyclerItemViewHolder, position: Int) {
         var data = myList!![position];
         holder.tgl.setText(data.tgl)
+        holder.berat_sapi.setText(data.berat_sapi)
         holder.tmpt.setText(data.tempat)
         mLastPosition = position
     }
@@ -41,8 +42,10 @@ class LokasiAdapter(var c: Context, private var myList: ArrayList<LokasiModel>?)
     inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
         var tgl: TextView
         var tmpt: TextView
+        var berat_sapi: TextView
 
         init {
+            berat_sapi = parent.findViewById(R.id.berat_sapi) as TextView
             tgl = parent.findViewById(R.id.tv_tgl_lokasi) as TextView
             tmpt = parent.findViewById(R.id.tv_tempat_lokasi) as TextView
         }

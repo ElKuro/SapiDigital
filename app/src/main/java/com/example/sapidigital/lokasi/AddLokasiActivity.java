@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class AddLokasiActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Spinner sp_hp;
-    EditText edt_tempat_pemeliharaan;
+    EditText edt_tempat_pemeliharaan,berat_sapi;
     Button btn_tgl,btn_submit_penyembelih;
     ProgressDialog progressDialog;
     TextView tv_sp;
@@ -58,6 +58,7 @@ public class AddLokasiActivity extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_add_lokasi);
         edt_tempat_pemeliharaan  = findViewById(R.id.edt_tempat_pemeliharaan);
         btn_submit_penyembelih  = findViewById(R.id.btn_submit_penyembelih);
+        berat_sapi = findViewById(R.id.berat_sapi);
         btn_tgl  = findViewById(R.id.btn_tgl);
 
         storageReference = FirebaseStorage.getInstance().getReference(); //To Upload Image
@@ -85,6 +86,7 @@ public class AddLokasiActivity extends AppCompatActivity implements AdapterView.
 
                 Map lokasi_model = new LokasiModel(
                         edt_tempat_pemeliharaan.getText().toString(),
+                        berat_sapi.getText().toString(),
                         btn_tgl.getText().toString(),
                         id_fl
                 ).toMap();

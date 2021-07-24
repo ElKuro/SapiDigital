@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FeedLotsAcitivity">
+    tools:context=".FeedLotsAcitivity"
+    android:background="@drawable/bg_loginblur2">
 
 
     <LinearLayout
@@ -41,7 +42,7 @@
     <Button
         android:layout_width="match_parent"
         android:background="@color/grey"
-        android:text="Tambah Hewan"
+        android:text="Tambah Sapi"
         android:layout_margin="12dp"
         android:id="@+id/btn_add_hewan"
         android:layout_height="wrap_content"

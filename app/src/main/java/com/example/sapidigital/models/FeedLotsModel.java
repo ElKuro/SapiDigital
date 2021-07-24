@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FeedLotsModel {
+    private String no_ternak;
     private String id;
     private String jenis_sapi;
     private String umur_sapi;
@@ -23,6 +24,7 @@ public class FeedLotsModel {
 
 
     public FeedLotsModel(
+            String no_ternak,
             String id,
             String jenis_sapi,
             String umur_sapi,
@@ -35,6 +37,7 @@ public class FeedLotsModel {
             String tgl,
             String ket
             ) {
+        this.no_ternak = no_ternak;
         this.id = id;
         this.jenis_sapi = jenis_sapi;
         this.umur_sapi = umur_sapi;
@@ -48,6 +51,14 @@ public class FeedLotsModel {
         this.ket = ket;
     }
 
+
+    public String getNo_ternak() {
+        return no_ternak;
+    }
+
+    public void setNo_ternak(String no_ternak) {
+        this.no_ternak = no_ternak;
+    }
 
     public String getKet() {
         return ket;
@@ -147,6 +158,7 @@ public class FeedLotsModel {
 
     public Map toMap() {
         HashMap result = new HashMap<>();
+        result.put("no_ternak", this.no_ternak);
         result.put("id", this.id);
         result.put("jenis_sapi", this.jenis_sapi);
         result.put("umur_sapi", this.umur_sapi);

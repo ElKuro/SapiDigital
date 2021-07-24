@@ -20,6 +20,7 @@ import com.example.sapidigital.FeedLotsAcitivity;
 import com.example.sapidigital.R;
 import com.example.sapidigital.models.PemeriksaanModel;
 import com.example.sapidigital.models.PenyembelihanModel;
+import com.example.sapidigital.mutu;
 import com.example.sapidigital.pemeriksa.AddPemeriksaanActivity;
 import com.example.sapidigital.pemeriksa.PemeriksaanActivity;
 import com.example.sapidigital.utils.DatePickerFragment;
@@ -36,8 +37,8 @@ import java.util.Map;
 
 public class AddPenyembelihanActivity extends AppCompatActivity {
 
-    EditText edt_name_penyembelih,berat_daging;
-    Button btn_tgl,btn_vidio,btn_submit_penyembelih;
+    EditText edt_name_penyembelih,berat_daging,warna_daging,warna_lemak,marbling;
+    Button btn_tgl,btn_vidio,btn_submit_penyembelih,button_mutu;
     private final int PICK_PDF_CODE = 2342;
     private Uri filepath;
     StorageReference storageReference;
@@ -51,8 +52,12 @@ public class AddPenyembelihanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_penyembelihan);
         btn_submit_penyembelih  = findViewById(R.id.btn_submit_penyembelih);
         btn_vidio  = findViewById(R.id.btn_vidio);
+        button_mutu = findViewById(R.id.button_mutu);
         btn_tgl  = findViewById(R.id.btn_tgl);
         berat_daging = findViewById((R.id.berat_daging));
+        warna_daging = findViewById(R.id.warna_daging);
+        warna_lemak = findViewById(R.id.warna_lemak);
+        marbling = findViewById(R.id.marbling);
         edt_name_penyembelih  = findViewById(R.id.edt_name_penyembelih);
         storageReference = FirebaseStorage.getInstance().getReference(); //To Upload Image
         String idLogin = Preferences.getIdLogin(AddPenyembelihanActivity.this);
@@ -67,6 +72,22 @@ public class AddPenyembelihanActivity extends AppCompatActivity {
             String j =(String) b.get("id_fl");
             id_fl = j;
         }
+
+        button_mutu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ii=new Intent(getApplicationContext(), mutu.class);
+                startActivity(ii);
+            }
+        });
+        //button_mutu.setOnClickListener(new View.OnClickListener() {
+           // @Override
+           // public void onClick(View v) {
+             //   startActivity(new Intent(getApplicationContext(), mutu.class));
+
+           // }
+        //});
+
         btn_tgl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +121,9 @@ public class AddPenyembelihanActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     Map penyembelihan = new PenyembelihanModel(
+                                            warna_daging.getText().toString(),
+                                            warna_lemak.getText().toString(),
+                                            marbling.getText().toString(),
                                             edt_name_penyembelih.getText().toString(),
                                             berat_daging.getText().toString(),
                                             btn_tgl.getText().toString(),
