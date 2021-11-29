@@ -9,6 +9,7 @@ public class LokasiModel {
     String berat_sapi;
     String tgl;
     String id_fl;
+    String id;
 
     public LokasiModel() {
     }
@@ -50,6 +51,14 @@ public class LokasiModel {
 
     public void setTgl(String tgl) {
         this.tgl = tgl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Map toMap() {

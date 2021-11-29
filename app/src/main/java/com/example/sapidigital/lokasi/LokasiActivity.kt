@@ -60,14 +60,23 @@ class LokasiActivity : AppCompatActivity() {
         flList = ArrayList()
         mAdapter = LokasiAdapter(this, flList)
         recyclerviewlokasi?.layoutManager = LinearLayoutManager(this)
+        var i = 0;
 
         flCollection.whereEqualTo("id_fl", id_fl).get().addOnCompleteListener { task: Task<QuerySnapshot> ->
+            flList.clear()
             if (task.isSuccessful) {
                 val document = task.result
                 if (!document!!.isEmpty) {
                     for (docs in task.result!!) {
-                        val fl = docs.toObject(LokasiModel::class.java)
-                        flList.add(fl)
+                        //val fl = docs.toObject(LokasiModel::class.java)
+                             val data = LokasiModel();
+                        data.berat_sapi = docs.toObject(LokasiModel::class.java).berat_sapi;
+                        data.id_fl = docs.toObject(LokasiModel::class.java).id_fl;
+                        data.tempat = docs.toObject(LokasiModel::class.java).tempat;
+                        data.tgl = docs.toObject(LokasiModel::class.java).tgl;
+                        data.id = document.documents[i].id;
+                        flList.add(data)
+                        i++;
                     }
                     mAdapter = LokasiAdapter(this, flList)
                     recyclerviewlokasi?.adapter = mAdapter

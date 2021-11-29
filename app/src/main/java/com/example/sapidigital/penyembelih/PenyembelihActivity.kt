@@ -2,6 +2,7 @@ package com.example.sapidigital.penyembelih
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.sapidigital.AddFeedlotsActivity
 import com.example.sapidigital.MainActivity
 import com.example.sapidigital.R
 import com.example.sapidigital.adapter.PenyembelihanAdapter
+import com.example.sapidigital.models.PemeriksaanModel
 import com.example.sapidigital.models.PenyembelihanModel
 import com.example.sapidigital.utils.Preferences
 import com.google.android.gms.tasks.Task
@@ -64,16 +66,38 @@ class PenyembelihActivity : AppCompatActivity() {
         flList = ArrayList()
         mAdapter = PenyembelihanAdapter(this, flList)
         rc_penyembelih?.layoutManager = LinearLayoutManager(this)
+        var i = 0;
+
 
         flCollection.whereEqualTo("fl_id",id_fl).get().addOnCompleteListener { task: Task<QuerySnapshot> ->
             flList.clear()
             if (task.isSuccessful) {
                 val document = task.result
+
                 if (!document!!.isEmpty) {
                     for (docs in task.result!!) {
-                        val fl = docs.toObject(PenyembelihanModel::class.java)
-                        flList.add(fl)
+
+                        //Log.e("id e - ",""+document.documents[i].id);
+                       // Log.e("id e - ",""+docs["name"]);
+                        //Log.e("all - ",""+docs.toObject(PenyembelihanModel::class.java));
+                        //val fl = docs.toObject(PenyembelihanModel::class.java);
+
+                        val data = PenyembelihanModel();
+                        data.berat_daging = docs.toObject(PenyembelihanModel::class.java).berat_daging;
+                        data.fl_id = docs.toObject(PenyembelihanModel::class.java).fl_id;
+                        data.name = docs.toObject(PenyembelihanModel::class.java).name;
+                        data.tgl = docs.toObject(PenyembelihanModel::class.java).tgl;
+                        data.vidio = docs.toObject(PenyembelihanModel::class.java).vidio;
+                        data.id = document.documents[i].id;
+
+
+
+                        flList.add(data)
+                        //Log.e("id dadasd- ",""+docs.toObject(PenyembelihanModel::class.java).berat_daging);
+                        i++;
                     }
+
+
                     mAdapter = PenyembelihanAdapter(this, flList)
                     rc_penyembelih?.adapter = mAdapter
 

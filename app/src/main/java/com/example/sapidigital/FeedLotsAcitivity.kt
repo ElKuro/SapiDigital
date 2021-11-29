@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sapidigital.adapter.FeedLotsAdapter
 import com.example.sapidigital.models.FeedLotsModel
+import com.example.sapidigital.models.LokasiModel
 import com.example.sapidigital.utils.Preferences
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 
 
@@ -24,7 +26,7 @@ class FeedLotsAcitivity : AppCompatActivity() {
     private lateinit var flList: ArrayList<FeedLotsModel>
     private lateinit var mAdapter: FeedLotsAdapter
     var db = FirebaseFirestore.getInstance()
-    var flCollection = db.collection("feedlots")
+    var flCollection = db.collection("feedlots").orderBy("tgl", Query.Direction.DESCENDING)
 
     var recyclerviewFL: RecyclerView? = null
     var btn_add_hewan: Button? = null
@@ -62,6 +64,7 @@ class FeedLotsAcitivity : AppCompatActivity() {
         flList = ArrayList()
         mAdapter = FeedLotsAdapter(this, flList)
 //        recyclerviewFL?.layoutManager = LinearLayoutManager(this)
+        var i = 0;
 
         recyclerviewFL?.setLayoutManager(GridLayoutManager(this, 2))
 
@@ -73,8 +76,25 @@ class FeedLotsAcitivity : AppCompatActivity() {
                     for (docs in task.result!!) {
 //                        flCollection.document(doc.id).delete()
                         val fl = docs.toObject(FeedLotsModel::class.java)
-                        fl.doc = docs.id
-                        flList.add(fl)
+
+                        val data = FeedLotsModel();
+                        data.no_ternak = docs.toObject(FeedLotsModel::class.java).no_ternak;
+                        data.umur_sapi = docs.toObject(FeedLotsModel::class.java).umur_sapi;
+                        data.riwayat = docs.toObject(FeedLotsModel::class.java).riwayat;
+                        data.bobot_terakhir = docs.toObject(FeedLotsModel::class.java).bobot_terakhir;
+                        data.jenis_sapi = docs.toObject(FeedLotsModel::class.java).jenis_sapi;
+                        data.ket = docs.toObject(FeedLotsModel::class.java).ket;
+                        data.foto = docs.toObject(FeedLotsModel::class.java).foto;
+                        data.tgl = docs.toObject(FeedLotsModel::class.java).tgl;
+                        data.gender = docs.toObject(FeedLotsModel::class.java).gender;
+                        data.user = docs.toObject(FeedLotsModel::class.java).user;
+                        data.id = docs.toObject(FeedLotsModel::class.java).id;
+                        data.doc = docs.id;
+
+                        fl.doc = docs.id;
+                        data.ids =  document.documents[i].id;
+                        flList.add(data)
+                        i++;
                     }
                     mAdapter = FeedLotsAdapter(this, flList)
                     mAdapter.notifyDataSetChanged()

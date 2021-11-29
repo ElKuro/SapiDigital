@@ -112,6 +112,7 @@ public class AddPemeriksaanActivity extends AppCompatActivity implements Adapter
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     Map pemeriksaanModel = new PemeriksaanModel(
+                                            
                                             berat_sapi.getText().toString(),
                                             edt_np.getText().toString(),
                                             btn_tp.getText().toString(),

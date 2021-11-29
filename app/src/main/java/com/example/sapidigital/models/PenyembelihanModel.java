@@ -13,11 +13,12 @@ public class PenyembelihanModel {
     String tgl;
     String vidio;
     String fl_id;
+    String id;
 
     public PenyembelihanModel() {
     }
 
-    public PenyembelihanModel( String warna_daging, String warna_lemak, String marbling, String name,String berat_daging, String tgl, String vidio,  String fl_id) {
+    public PenyembelihanModel(String warna_daging, String warna_lemak, String marbling, String name, String berat_daging, String tgl, String vidio, String fl_id) {
         this.warna_daging = warna_daging;
         this.warna_lemak = warna_lemak;
         this.marbling = marbling;
@@ -26,6 +27,7 @@ public class PenyembelihanModel {
         this.tgl = tgl;
         this.vidio = vidio;
         this.fl_id = fl_id;
+
     }
 
     public String getWarna_daging() {
@@ -51,7 +53,6 @@ public class PenyembelihanModel {
     public void setMarbling(String marbling) {
         this.marbling = marbling;
     }
-
 
     public String getName() {
         return name;
@@ -91,6 +92,14 @@ public class PenyembelihanModel {
 
     public void setFl_id(String fl_id) {
         this.fl_id = fl_id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Map toMap() {

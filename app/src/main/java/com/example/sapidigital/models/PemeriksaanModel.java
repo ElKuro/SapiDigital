@@ -11,6 +11,7 @@ public class PemeriksaanModel {
     String surat_pemeriksaan;
     String ket;
     String fl_id;
+    String id;
 
     public PemeriksaanModel() {
     }
@@ -80,6 +81,14 @@ public class PemeriksaanModel {
 
     public void setFl_id(String fl_id) {
         this.fl_id = fl_id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Map toMap() {

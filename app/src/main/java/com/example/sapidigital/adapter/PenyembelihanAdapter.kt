@@ -1,5 +1,6 @@
 package com.example.sapidigital.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.media.Image
@@ -14,12 +15,23 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sapidigital.R
+import com.example.sapidigital.edit_company.TAG
 import com.example.sapidigital.models.PenyembelihanModel
+import com.example.sapidigital.penyembelih.AddPenyembelihanActivity
+import com.example.sapidigital.penyembelih.PenyembelihActivity
+import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.okhttp.internal.Internal.instance
 
 
 class PenyembelihanAdapter(var c: Context, private var myList: ArrayList<PenyembelihanModel>?) :
         RecyclerView.Adapter<PenyembelihanAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
+
+
+    var db = FirebaseFirestore.getInstance()
+
+
+
 
     override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -31,10 +43,13 @@ class PenyembelihanAdapter(var c: Context, private var myList: ArrayList<Penyemb
                 false
         )
         return RecyclerItemViewHolder(view)
+
     }
     //set view
     override fun onBindViewHolder(holder: PenyembelihanAdapter.RecyclerItemViewHolder, position: Int) {
+
         var data = myList!![position];
+
         holder.warna_daging.setText(data.warna_daging)
         holder.warna_lemak.setText(data.warna_lemak)
         holder.marbling.setText(data.marbling)
@@ -45,6 +60,41 @@ class PenyembelihanAdapter(var c: Context, private var myList: ArrayList<Penyemb
             Log.e("das", "asdhk");
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data.vidio))
             holder.itemView.context.startActivity(browserIntent)
+
+
+        }
+        holder.ic_delete.setOnClickListener {
+            Log.e("idK", ""+data.id);
+            val mAlertDialog = AlertDialog.Builder(c)
+            //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
+            mAlertDialog.setTitle("Hapus Data ?") //set alertdialog title
+            mAlertDialog.setMessage("Yakin menghapus data anda?") //set alertdialog message
+            mAlertDialog.setPositiveButton("Yes") { dialog, id ->
+                //perform some tasks here
+                //Toast.makeText(c, "Yes", Toast.LENGTH_SHORT).show()
+                if (db != null) {
+                    db.collection("penyembelihan").document(""+data.id)
+                            .delete()
+                            .addOnSuccessListener {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!")
+
+                                c.startActivity(Intent(c, PenyembelihActivity::class.java))
+
+                            }
+                            .addOnFailureListener {
+                                e -> Log.w(TAG, "Error deleting document", e)
+                                // startActivity(Intent(context, PenyembelihActivity::class.java))
+
+                            }
+                }
+            }
+            mAlertDialog.setNegativeButton("No") { dialog, id ->
+                //perform som tasks here
+                //Toast.makeText(c, "No", Toast.LENGTH_SHORT).show()
+            }
+            mAlertDialog.show()
+
+
 
 
         }
@@ -91,4 +141,6 @@ class PenyembelihanAdapter(var c: Context, private var myList: ArrayList<Penyemb
 
     }
 }
+
+
 

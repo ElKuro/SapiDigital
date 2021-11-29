@@ -17,6 +17,7 @@ public class FeedLotsModel {
     private String tgl;
     private String doc;
     private String ket;
+    String ids;
 
     public FeedLotsModel(){
 
@@ -154,6 +155,14 @@ public class FeedLotsModel {
 
     public void setTgl(String tgl) {
         this.tgl = tgl;
+    }
+
+    public String getIds() {
+        return ids;
+    }
+
+    public void setIds(String ids) {
+        this.ids = ids;
     }
 
     public Map toMap() {
