@@ -6,16 +6,18 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/lview"
         android:layout_width="match_parent"
-        app:cardCornerRadius="8dp"
+        android:layout_height="wrap_content"
         android:elevation="2dp"
-        android:layout_height="wrap_content">
+        app:cardCornerRadius="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#5177F607">
+            android:background="#5177F607"
+            android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,10 +43,10 @@
                         android:id="@+id/tv_tempat_lokasi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="test"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -100,14 +102,12 @@
                         android:id="@+id/tv_tgl_lokasi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="test"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
-
-
 
 
             </LinearLayout>
@@ -119,4 +119,10 @@
         android:layout_width="match_parent"
         android:background="@color/grey"
         android:layout_height="1dp"/>
+
+    <Button
+        android:id="@+id/lohapus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="hapus" />
 </LinearLayout>

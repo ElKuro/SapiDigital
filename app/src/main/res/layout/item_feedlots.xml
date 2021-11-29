@@ -35,6 +35,12 @@
             android:textSize="14sp"
             android:id="@+id/tv_name"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/shapus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HAPUS" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
